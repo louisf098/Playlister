@@ -74,14 +74,13 @@ body {
   float: right;
 }
 
-#playlist-selector,
 #playlist-cards {
     overflow: auto;
     grid-column: 1 / 3;
     grid-row: 2 / 3;
     display: grid;
     background-color: var(--swatch-primary);
-    max-height: 79%;
+    max-height: 79%; 
 }
 
 .playlister-button,
@@ -153,8 +152,14 @@ body {
   float: left;
 }
 
-#list-selector-list, #playlist-cards {
-  position: absolute;
+#list-selector-list {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  max-height: 80vh;
+}
+
+#playlist-cards {
   left: 0%;
   top: 10%;
   width: 100%;

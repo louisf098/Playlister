@@ -5,8 +5,10 @@ import MUIDeleteModal from './MUIDeleteModal'
 
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab'
+import Box from '@mui/material/Box'
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography'
+import YouTubePlayerExample from './PlaylisterYouTubePlayer';
 /*
     This React component lists all the top5 lists in the UI.
     
@@ -25,7 +27,7 @@ const HomeScreen = () => {
     let listCard = "";
     if (store) {
         listCard = 
-            <List sx={{ width: '90%', left: '5%', bgcolor: 'background.paper' }}>
+            <List sx={{ bgcolor: 'background.paper' }}>
             {
                 store.idNamePairs.map((pair) => (
                     <ListCard
@@ -38,25 +40,36 @@ const HomeScreen = () => {
             </List>;
     }
     return (
-        <div id="playlist-selector">
-            <div id="list-selector-heading">
-            <Fab 
-                color="primary" 
-                aria-label="add"
-                id="add-list-button"
-                onClick={handleCreateNewList}
-            >
-                <AddIcon />
-            </Fab>
-                <Typography variant="h2">Your Lists</Typography>
+
+        <Box sx={{bgcolor: 'red'}}>
+        
+            <div>
+                <div id="list-selector-heading">
+                <Fab 
+                    color="primary" 
+                    aria-label="add"
+                    id="add-list-button"
+                    onClick={handleCreateNewList}
+                >
+                    <AddIcon />
+                </Fab>
+                    <Typography variant="h2">Your Lists</Typography>
+                </div>
+                <div id="list-selector-list" style={{width: '50%', float: 'left'}}>
+                    {
+                        listCard
+                    }
+                    <MUIDeleteModal />
+                </div>
             </div>
-            <div id="list-selector-list">
-                {
-                    listCard
-                }
-                <MUIDeleteModal />
+            
+            <div style={{float: 'right', width: '50%'}}>
+                <YouTubePlayerExample />
             </div>
-        </div>)
+
+        </Box>
+
+        )
 }
 
 export default HomeScreen;

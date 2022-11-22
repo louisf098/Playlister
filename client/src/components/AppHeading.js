@@ -90,6 +90,10 @@ export default function AppBanner() {
         justifyContent: 'center',
       }));
 
+    const handleOpenSort = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
 
     return (
        <Box>
@@ -121,10 +125,29 @@ export default function AppBanner() {
 
                     <Box sx={{display: 'flex', ml: "auto"}}>
                         <Typography sx={{mt: 1}}>Sort By</Typography>
-                        <IconButton>
+                        <IconButton onClick={handleOpenSort}>
                             <MenuIcon></MenuIcon>
                         </IconButton>
                     </Box>
+                    <Menu
+                        id="demo-positioned-menu"
+                        aria-labelledby="demo-positioned-button"
+                        anchorEl={anchorEl}
+                        open={isMenuOpen}
+                        onClose={handleMenuClose}
+                        anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                        }}
+                        transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                        }}
+                    >
+                        <MenuItem onClick={handleMenuClose}>Sort By</MenuItem>
+                        <MenuItem onClick={handleMenuClose}>Sort By</MenuItem>
+                        <MenuItem onClick={handleMenuClose}>Sort By</MenuItem>
+                    </Menu>
                 </Toolbar>
             </AppBar> 
 

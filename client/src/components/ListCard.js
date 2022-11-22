@@ -6,6 +6,15 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import TextField from '@mui/material/TextField';
+import { flexbox } from '@mui/system';
+
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+
+import { Icon, Typography } from '@mui/material';
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -77,24 +86,40 @@ function ListCard(props) {
         <ListItem
             id={idNamePair._id}
             key={idNamePair._id}
-            sx={{ marginTop: '10px', display: 'flex', p: 1 }}
-            style={{ width: '100%', fontSize: '48pt' }}
+            sx={{ marginTop: '10px', display: 'grid'}}
+            style={{ width: '100%', fontSize: '30pt' }}
             button
             onClick={(event) => {
                 handleLoadList(event, idNamePair._id)
             }}
         >
-            <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box>
-            <Box sx={{ p: 1 }}>
-                <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                    <EditIcon style={{fontSize:'48pt'}} />
-                </IconButton>
+            <Box sx={{display: 'flex'}}>
+                <Box>{idNamePair.name}</Box>
+                <Box sx={{display: 'flex', ml: "120%"}}>
+                    <Box>
+                        <IconButton onClick={handleToggleEdit} aria-label='edit'>
+                            <ThumbUpOffAltIcon style={{fontSize:'22pt'}} />
+                        </IconButton>
+                    </Box>
+                    <Box>
+                        <IconButton onClick={(event) => {
+                                handleDeleteList(event, idNamePair._id)
+                            }} aria-label='delete'>
+                            <ThumbDownOffAltIcon style={{fontSize:'22pt'}} />
+                        </IconButton>
+                    </Box>
+                </Box>
             </Box>
-            <Box sx={{ p: 1 }}>
-                <IconButton onClick={(event) => {
-                        handleDeleteList(event, idNamePair._id)
-                    }} aria-label='delete'>
-                    <DeleteIcon style={{fontSize:'48pt'}} />
+
+            <Box sx={{display: 'flex'}}>
+                <Typography>By: Louis Feng</Typography>
+            </Box>
+
+            <Box sx={{display: 'flex'}}>
+                <Typography sx={{color: 'green'}}>Published: </Typography>
+                <Typography sx={{color: 'red', ml: '50%'}}>Listens: </Typography>
+                <IconButton sx={{ml: '100%'}}>
+                    <KeyboardDoubleArrowDownIcon style={{fontSize:'22pt'}}></KeyboardDoubleArrowDownIcon>
                 </IconButton>
             </Box>
         </ListItem>

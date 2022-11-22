@@ -155,8 +155,9 @@ body {
 #list-selector-list {
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  overflow: scroll;
   max-height: 74vh;
+  height: 72vh;
 }
 
 #playlist-cards {

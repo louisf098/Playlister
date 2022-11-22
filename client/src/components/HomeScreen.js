@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
 import ListCard from './ListCard.js'
 import MUIDeleteModal from './MUIDeleteModal'
+import AppHeading from './AppHeading'
 
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab'
@@ -41,7 +42,7 @@ const HomeScreen = () => {
     }
     return (
 
-        <Box sx={{bgcolor: 'red'}}>
+        <Box>
         
             <div>
                 <div id="list-selector-heading">
@@ -55,6 +56,7 @@ const HomeScreen = () => {
                 </Fab>
                     <Typography variant="h2">Your Lists</Typography>
                 </div>
+                <AppHeading />
                 <div id="list-selector-list" style={{width: '50%', float: 'left'}}>
                     {
                         listCard

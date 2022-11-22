@@ -156,7 +156,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: auto;
-  max-height: 80vh;
+  max-height: 74vh;
 }
 
 #playlist-cards {

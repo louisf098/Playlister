@@ -10,6 +10,7 @@ import Box from '@mui/material/Box'
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography'
 import YouTubePlayerExample from './PlaylisterYouTubePlayer';
+
 /*
     This React component lists all the top5 lists in the UI.
     
@@ -45,7 +46,7 @@ const HomeScreen = () => {
         <Box>
         
             <div>
-                <div id="list-selector-heading" style={{backgroundColor: "#2c387e"}}>
+                {/* <div id="list-selector-heading" style={{backgroundColor: "#2c387e"}}>
                 <Fab 
                     color="primary" 
                     aria-label="add"
@@ -55,7 +56,7 @@ const HomeScreen = () => {
                     <AddIcon />
                 </Fab>
                     <Typography variant="h2">Your Lists</Typography>
-                </div>
+                </div> */}
                 <AppHeading />
                 <div id="list-selector-list" style={{width: '50%', float: 'left'}}>
                     {

@@ -95,7 +95,7 @@ function ListCard(props) {
         >
             <Box sx={{display: 'flex'}}>
                 <Box>{idNamePair.name}</Box>
-                <Box sx={{display: 'flex', ml: "120%"}}>
+                <Box sx={{display: 'flex', ml: "100%"}}>
                     <Box>
                         <IconButton onClick={handleToggleEdit} aria-label='edit'>
                             <ThumbUpOffAltIcon style={{fontSize:'22pt'}} />
@@ -118,7 +118,7 @@ function ListCard(props) {
             <Box sx={{display: 'flex'}}>
                 <Typography sx={{color: 'green'}}>Published: </Typography>
                 <Typography sx={{color: 'red', ml: '50%'}}>Listens: </Typography>
-                <IconButton sx={{ml: '100%'}}>
+                <IconButton sx={{ml: '80%'}}>
                     <KeyboardDoubleArrowDownIcon style={{fontSize:'22pt'}}></KeyboardDoubleArrowDownIcon>
                 </IconButton>
             </Box>

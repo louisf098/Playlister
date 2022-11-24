@@ -97,17 +97,17 @@ export default function AppBanner() {
 
     return (
        <Box>
-            <AppBar position="static">
+            <AppBar position="static" sx={{bgcolor: "#3f51b5"}}>
                 <Toolbar>
                     <Box>
                         <IconButton onClick={testing}>
-                            <HomeIcon></HomeIcon>
+                            <HomeIcon sx={{color: "white"}}></HomeIcon>
                         </IconButton>
                         <IconButton>
-                            <GroupsIcon></GroupsIcon>
+                            <GroupsIcon sx={{color: "white"}}></GroupsIcon>
                         </IconButton>
                         <IconButton>
-                            <PersonIcon></PersonIcon>
+                            <PersonIcon sx={{color: "white"}}></PersonIcon>
                         </IconButton>
                     </Box>
 
@@ -126,7 +126,7 @@ export default function AppBanner() {
                     <Box sx={{display: 'flex', ml: "auto"}}>
                         <Typography sx={{mt: 1}}>Sort By</Typography>
                         <IconButton onClick={handleOpenSort}>
-                            <MenuIcon></MenuIcon>
+                            <MenuIcon sx={{color: "white"}}></MenuIcon>
                         </IconButton>
                     </Box>
                     <Menu

@@ -28,7 +28,7 @@ const HomeScreen = () => {
     let listCard = "";
     if (store) {
         listCard = 
-            <List sx={{ bgcolor: 'background.paper', width: '100%' }}>
+            <List sx={{ bgcolor: 'background.paper', width: '90%', left: '5%'}}>
             {
                 store.idNamePairs.map((pair) => (
                     <ListCard
@@ -45,7 +45,7 @@ const HomeScreen = () => {
         <Box>
         
             <div>
-                <div id="list-selector-heading">
+                <div id="list-selector-heading" style={{backgroundColor: "#2c387e"}}>
                 <Fab 
                     color="primary" 
                     aria-label="add"

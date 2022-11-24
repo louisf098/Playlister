@@ -21,7 +21,7 @@ body {
 }
 
 #root {
-  background-color: var(--swatch-primary);
+  background-color: #3f51b5;
   font-family: "Lexend Exa";
   position: absolute;
   width: 80%;

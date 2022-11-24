@@ -101,13 +101,13 @@ export default function AppBanner() {
                 <Toolbar>
                     <Box>
                         <IconButton onClick={testing}>
-                            <HomeIcon sx={{color: "white"}}></HomeIcon>
+                            <HomeIcon sx={{fontSize: "22pt", color: "white"}}></HomeIcon>
                         </IconButton>
                         <IconButton>
-                            <GroupsIcon sx={{color: "white"}}></GroupsIcon>
+                            <GroupsIcon sx={{fontSize: "22pt", color: "white"}}></GroupsIcon>
                         </IconButton>
                         <IconButton>
-                            <PersonIcon sx={{color: "white"}}></PersonIcon>
+                            <PersonIcon sx={{fontSize: "22pt", color: "white"}}></PersonIcon>
                         </IconButton>
                     </Box>
 

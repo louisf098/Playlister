@@ -97,6 +97,7 @@ export default function AppBanner() {
     }
 
     return (
+
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{bgcolor: "#2c387e"}}>
                 <Toolbar>
@@ -104,9 +105,11 @@ export default function AppBanner() {
                         variant="h4"
                         noWrap
                         component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}                        
+                        id="playlister-logo"
+                        sx={{ display: { xs: 'none', sm: 'block' }, fontSize: "22pt", ml: '1%' }}                   
                     >
-                        <Link style={{ textDecoration: 'none', color: 'white' }} to='/' onClick={handleClearTps}>⌂</Link>
+                        {/* <Link style={{ textDecoration: 'none', color: 'white' }} to='/' onClick={handleClearTps}>⌂</Link> */}
+                        Playlister
                     </Typography>
                     <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

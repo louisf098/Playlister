@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+
 :root {
   /* 
         FIRST WE'LL DEFINE OUR SWATCHES, i.e. THE COMPLEMENTARY
@@ -36,6 +38,10 @@ body {
   height: 100%;
   top: 0%;
   left: 0%;
+}
+
+#playlister-logo {
+  font-family: 'Satisfy', cursive;
 }
 
 #playlister-banner {
@@ -155,7 +161,7 @@ body {
 #list-selector-list {
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  overflow: auto;
   max-height: 74vh;
   height: 72vh;
 }

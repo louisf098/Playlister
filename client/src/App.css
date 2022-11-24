@@ -19,7 +19,7 @@
 }
 
 body {
-  background-color: var(--swatch-foundation);
+  background-color: var(--swatch-primary);
 }
 
 #root {

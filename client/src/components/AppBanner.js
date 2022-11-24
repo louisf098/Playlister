@@ -106,7 +106,7 @@ export default function AppBanner() {
                         noWrap
                         component="div"
                         id="playlister-logo"
-                        sx={{ display: { xs: 'none', sm: 'block' }, fontSize: "22pt", ml: '1%' }}                   
+                        sx={{ display: { xs: 'none', sm: 'block' }, fontSize: "22pt", ml: '1%', fontWeight: 'bold' }}                   
                     >
                         {/* <Link style={{ textDecoration: 'none', color: 'white' }} to='/' onClick={handleClearTps}>⌂</Link> */}
                         Playlister
@@ -121,6 +121,7 @@ export default function AppBanner() {
                             aria-haspopup="true"
                             onClick={handleProfileMenuOpen}
                             color="inherit"
+                            sx={{ border: "2px solid black", borderRadius: "50%", p: "4px 11px 4px 11px", bgcolor: "#3f51b5"}}
                         >
                             { getAccountMenu(auth.loggedIn) }
                         </IconButton>

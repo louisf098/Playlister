@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&family=Satisfy&display=swap');
 
 :root {
   /* 
@@ -60,7 +60,7 @@ body {
   border-radius: 10px;
 }
 #splash-screen {
-  background-image: linear-gradient(to bottom, #b8b808, #636723);
+  background-image: linear-gradient(to bottom, #24125b, #794efc);
   color: white;
   font-size: 5vw;
   border-color: black;

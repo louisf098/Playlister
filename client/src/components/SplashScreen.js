@@ -4,6 +4,11 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 
 export default function SplashScreen() {
+
+    function handleLogin() {
+
+    }
+    
     let buttonStyles = {
         "&.MuiButton-contained": {
             backgroundImage: "linear-gradient(to bottom, #24125b, purple)",
@@ -50,14 +55,17 @@ export default function SplashScreen() {
                         favorite playlists created by other users!
                     </Typography>
                 </Grid>
+                <Grid item xs={12}>
+                    <Box sx={{p: "2%"}}></Box>
+                </Grid>
                 <Grid container>
                     <Grid item xs={4}>
-                        <Button variant="contained" sx={buttonStyles}>
+                        <Button variant="contained" sx={buttonStyles} href="/login/">
                             Login
                         </Button>
                     </Grid>
                     <Grid item xs={4}>
-                        <Button variant="contained" sx={buttonStyles}>
+                        <Button variant="contained" sx={buttonStyles} href="/register/">
                             Create Account
                         </Button>
                     </Grid>

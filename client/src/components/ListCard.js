@@ -229,7 +229,11 @@ function ListCard(props) {
         if (store.currentList !== null) {
             setExpanded(idNamePair.name === store.currentList.name);
         }
-    }, [store.currentList]);
+    }, [store.currentList]);        
+
+    useEffect(() => {
+        store.loadIdNamePairs();
+    }, [store.newListCounter]);        
 
     let cardElement = (
         <ListItem

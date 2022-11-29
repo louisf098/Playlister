@@ -27,7 +27,6 @@ function Statusbar() {
 
     let statusBar = "";
     if (auth.loggedIn) {
-        console.log("hi");
         statusBar =
             <div id="playlister-statusbar">
                 {/* <Typography variant="h4">{text}</Typography> */}
@@ -40,7 +39,7 @@ function Statusbar() {
                     <AddIcon sx={{ fontSize: "35pt", color: "black"}}/>
                 </IconButton>
                     <Typography variant="h2">Your Lists</Typography>
-                
+                    
             </div>
         
     }

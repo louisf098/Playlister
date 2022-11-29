@@ -67,7 +67,7 @@ const HomeScreen = () => {
             </div>
             
             <div style={{float: 'right', width: '50%'}}>
-                <YouTubePlayerExample />
+                {/* <YouTubePlayerExample /> */}
             </div>
 
         </Box>

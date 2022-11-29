@@ -180,9 +180,11 @@ body {
 .list-card,
 .selected-list-card,
 .unselected-list-card {
+  max-width: 32vw;
+  width: 100%;
   font-size: 18pt;
-  margin: 10px;
-  padding: 20px;
+  margin: 2px;
+  padding: 18px;
   border-radius: 25px;
 }
 
@@ -206,7 +208,7 @@ body {
 }
 
 .unselected-list-card {
-  background-color: var(--swatch-complement);
+  background-color: #ede7f6;
 }
 
 .list-card-button {

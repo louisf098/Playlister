@@ -10,7 +10,6 @@ import Fab from '@mui/material/Fab'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography'
-import YouTubePlayerExample from './PlaylisterYouTubePlayer';
 
 /*
     This React component lists all the top5 lists in the UI.
@@ -67,8 +66,7 @@ const HomeScreen = () => {
                 </div>
             </div>
             
-            <div style={{float: 'right', width: '50%'}}>
-                {/* <YouTubePlayerExample /> */}
+            <div style={{float: 'right', width: '50%', height: '72vh', backgroundColor: '#e6e6e6'}}>
                 <UserPlayerArea />
             </div>
 

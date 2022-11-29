@@ -3,6 +3,8 @@ import GlobalStoreContext from '../store';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import { Typography } from '@mui/material';
+import { Button } from '@mui/material'
 
 const style = {
     position: 'absolute',
@@ -34,7 +36,14 @@ export default function MUIDeleteModal() {
             open={store.listMarkedForDeletion !== null}
         >
             <Box sx={style}>
-                <div className="modal-dialog">
+                <Box component="div" sx={{display: 'flex', flexDirection: 'column'}}>
+                    <Typography sx={{fontWeight: 'bold', fontSize: '20px'}}>Delete the the playlist, {name}?</Typography>
+                    <Box sx={{display: 'flex', justifyContent: 'space-around', mt: '8px'}}>
+                        <Button variant="contained" onClick={handleDeleteList}>Confirm</Button>
+                        <Button variant="contained" onClick={handleCloseModal}>Cancel</Button>
+                    </Box>
+                </Box>
+                {/* <div className="modal-dialog">
                 <header className="dialog-header">
                     Delete the {name} playlist?
                 </header>
@@ -50,7 +59,7 @@ export default function MUIDeleteModal() {
                         onClick={handleCloseModal}
                     >Cancel</button>
                 </div>
-            </div>
+            </div> */}
             </Box>
         </Modal>
     );

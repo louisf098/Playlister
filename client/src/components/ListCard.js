@@ -89,6 +89,9 @@ function ListCard(props) {
     function handleUpdateText(event) {
         setText(event.target.value);
     }
+    function handleAddNewSong() {
+        store.addNewSong();
+    }
 
     let selectClass = "unselected-list-card";
     if (selected) {
@@ -132,7 +135,8 @@ function ListCard(props) {
                                 backgroundColor: '#111111',
                                 color: 'white',
                             },
-                        }}>
+                        }}
+                        onClick={handleAddNewSong}>
                             +
                         </Button> 
                     </ListItem>

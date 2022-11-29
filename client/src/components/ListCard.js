@@ -170,6 +170,31 @@ function ListCard(props) {
         songBox = <Box></Box>;
     }
 
+    let workspaceButtons = "";
+    let workspaceButtonStyles = {
+        "&.MuiButton-contained": {
+        backgroundColor: "#2c387e",},
+        fontSize: "10px",
+        margin: "1px"
+    };
+    if (expanded) {
+        workspaceButtons =
+            <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+                <Box>
+                    <Button variant="contained" sx={workspaceButtonStyles}>Undo</Button>
+                    <Button variant="contained" sx={workspaceButtonStyles}>Redo</Button>
+                </Box>
+                <Box>
+                    <Button variant="contained" sx={workspaceButtonStyles}>Publish</Button>
+                    <Button variant="contained" sx={workspaceButtonStyles}>Delete</Button>
+                    <Button variant="contained" sx={workspaceButtonStyles}>Duplicate</Button>
+                </Box>
+            </Box>
+    }
+    else {
+        workspaceButtons = <Box></Box>
+    }
+
     useEffect(() => {
         if (store.currentList !== null) {
             setExpanded(idNamePair.name === store.currentList.name);
@@ -218,6 +243,8 @@ function ListCard(props) {
             </Box>
 
             {songBox}
+
+            {workspaceButtons}
 
             <Box sx={{ display: "flex" }}>
                 <Typography>By: Louis Feng</Typography>

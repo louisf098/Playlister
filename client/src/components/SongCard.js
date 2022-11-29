@@ -77,7 +77,7 @@ function SongCard(props) {
                 </a>
             </Box>
             <IconButton sx={{float: "right"}}>
-                <ClearIcon sx={{size: "medium"}}></ClearIcon>
+                <ClearIcon sx={{size: "medium", color: "grey"}}></ClearIcon>
             </IconButton>
         </div>
     );

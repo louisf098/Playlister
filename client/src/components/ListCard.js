@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import TextField from "@mui/material/TextField";
+import { Typography } from "@mui/material";
 
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
@@ -15,8 +16,6 @@ import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
-
-import { Icon, Typography } from "@mui/material";
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -92,6 +91,12 @@ function ListCard(props) {
     }
     function handleAddNewSong() {
         store.addNewSong();
+    }
+    function handleUndo() {
+        store.undo();
+    }
+    function handleRedo() {
+        store.redo();
     }
 
     let selectClass = "unselected-list-card";
@@ -173,26 +178,51 @@ function ListCard(props) {
     let workspaceButtons = "";
     let workspaceButtonStyles = {
         "&.MuiButton-contained": {
-        backgroundColor: "#2c387e",},
+            backgroundColor: "#2c387e",
+        },
         fontSize: "10px",
-        margin: "1px"
+        margin: "1px",
     };
     if (expanded) {
-        workspaceButtons =
-            <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+        workspaceButtons = (
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <Box>
-                    <Button variant="contained" sx={workspaceButtonStyles}>Undo</Button>
-                    <Button variant="contained" sx={workspaceButtonStyles}>Redo</Button>
+                    <Button
+                        onClick={handleUndo}
+                        variant="contained"
+                        sx={workspaceButtonStyles}
+                    >
+                        Undo
+                    </Button>
+                    <Button
+                        onClick={handleRedo}
+                        variant="contained"
+                        sx={workspaceButtonStyles}
+                    >
+                        Redo
+                    </Button>
                 </Box>
                 <Box>
-                    <Button variant="contained" sx={workspaceButtonStyles}>Publish</Button>
-                    <Button variant="contained" sx={workspaceButtonStyles}>Delete</Button>
-                    <Button variant="contained" sx={workspaceButtonStyles}>Duplicate</Button>
+                    <Button variant="contained" sx={workspaceButtonStyles}>
+                        Publish
+                    </Button>
+                    <Button
+                        onClick={(event) => {
+                            handleDeleteList(event, idNamePair._id);
+                        }}
+                        variant="contained"
+                        sx={workspaceButtonStyles}
+                    >
+                        Delete
+                    </Button>
+                    <Button variant="contained" sx={workspaceButtonStyles}>
+                        Duplicate
+                    </Button>
                 </Box>
             </Box>
-    }
-    else {
-        workspaceButtons = <Box></Box>
+        );
+    } else {
+        workspaceButtons = <Box></Box>;
     }
 
     useEffect(() => {

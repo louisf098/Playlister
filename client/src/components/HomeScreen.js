@@ -3,6 +3,7 @@ import { GlobalStoreContext } from '../store'
 import ListCard from './ListCard.js'
 import MUIDeleteModal from './MUIDeleteModal'
 import AppHeading from './AppHeading'
+import UserPlayerArea from './UserPlayerArea'
 
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab'
@@ -68,6 +69,7 @@ const HomeScreen = () => {
             
             <div style={{float: 'right', width: '50%'}}>
                 {/* <YouTubePlayerExample /> */}
+                <UserPlayerArea />
             </div>
 
         </Box>

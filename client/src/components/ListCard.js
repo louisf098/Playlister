@@ -1,24 +1,22 @@
-import { useContext, useState } from 'react'
-import { GlobalStoreContext } from '../store'
-import SongCard from './SongCard';
+import { useContext, useState, useEffect } from "react";
+import { GlobalStoreContext } from "../store";
+import SongCard from "./SongCard";
 
-import Box from '@mui/material/Box';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import TextField from '@mui/material/TextField';
-import { flexbox } from '@mui/system';
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import TextField from "@mui/material/TextField";
 
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
-import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
-import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
-import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
+import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
+import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 
-import { Icon, Typography } from '@mui/material';
+import { Icon, Typography } from "@mui/material";
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -32,12 +30,13 @@ function ListCard(props) {
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
     const { idNamePair, selected } = props;
+    const [expanded, setExpanded] = useState(false);
 
     function handleLoadList(event, id) {
         console.log("handleLoadList for " + id);
         if (!event.target.disabled) {
             let _id = event.target.id;
-            if (_id.indexOf('list-card-text-') >= 0)
+            if (_id.indexOf("list-card-text-") >= 0)
                 _id = ("" + _id).substring("list-card-text-".length);
 
             console.log("load " + event.target.id);
@@ -49,13 +48,15 @@ function ListCard(props) {
 
     function handleSelect(event, id) {
         if (store.currentList === null) {
+            //load in
             store.setCurrentList(id);
-        }
-        else if (store.currentList.name === idNamePair.name) {
+        } else if (store.currentList.name !== idNamePair.name) {
+            //select another list while one list is open
+            store.setCurrentList(id);
+        } else {
+            //close same list
             store.resetCurrentList();
-        }
-        else {
-            store.setCurrentList(id);
+            setExpanded(false);
         }
     }
 
@@ -102,77 +103,115 @@ function ListCard(props) {
         cardStatus = true;
     }
 
+    let expandButton = "";
+    if (expanded === false) {
+        expandButton = (
+            <KeyboardDoubleArrowDownIcon
+                style={{ fontSize: "22pt" }}
+            ></KeyboardDoubleArrowDownIcon>
+        );
+    } else {
+        expandButton = (
+            <KeyboardDoubleArrowUpIcon
+                style={{ fontSize: "22pt" }}
+            ></KeyboardDoubleArrowUpIcon>
+        );
+    }
     let songBox = "";
 
-    if (store.currentList !== null && idNamePair.name === store.currentList.name) {
-        songBox = 
-            <Box sx={{maxWidth: "32vw", width: "100%"}}>
-                <List sx={{alignItems: "center"}}>
-                    {
-                        store.currentList.songs.map((song, index) => (
-                            <ListItem sx={{maxWidth: "32vw", width: "100%"}}>
-                                <SongCard
-                                    id={'playlist-song-' + (index)}
-                                    key={'playlist-song-' + (index)}
-                                    index={index}
-                                    song={song}
-                                />
-                            </ListItem>
-                        ))  
-                    }
-                    <ListItem sx={{
-                        justifyContent: "center",
-                    }}>
-                        <Button variant="contained" sx={{
-                            width: "100%",
-                            fontSize: "18pt",
-                            padding: "10px",
-                            borderRadius: "25px",
-                            bgcolor: "#ede7f6",
-                            color: "black",
-                            "&.MuiButton-contained": { backgroundColor: "ede7f6" },
-                            '&:hover': {
-                                backgroundColor: '#111111',
-                                color: 'white',
-                            },
+    if (
+        store.currentList !== null &&
+        idNamePair.name === store.currentList.name
+    ) {
+        songBox = (
+            <Box sx={{ maxWidth: "32vw", width: "100%" }}>
+                <List sx={{ alignItems: "center" }}>
+                    {store.currentList.songs.map((song, index) => (
+                        <ListItem sx={{ maxWidth: "32vw", width: "100%" }}>
+                            <SongCard
+                                id={"playlist-song-" + index}
+                                key={"playlist-song-" + index}
+                                index={index}
+                                song={song}
+                            />
+                        </ListItem>
+                    ))}
+                    <ListItem
+                        sx={{
+                            justifyContent: "center",
                         }}
-                        onClick={handleAddNewSong}>
+                    >
+                        <Button
+                            variant="contained"
+                            sx={{
+                                width: "100%",
+                                fontSize: "18pt",
+                                padding: "10px",
+                                borderRadius: "25px",
+                                bgcolor: "#ede7f6",
+                                color: "black",
+                                "&.MuiButton-contained": {
+                                    backgroundColor: "ede7f6",
+                                },
+                                "&:hover": {
+                                    backgroundColor: "#111111",
+                                    color: "white",
+                                },
+                            }}
+                            onClick={handleAddNewSong}
+                        >
                             +
-                        </Button> 
+                        </Button>
                     </ListItem>
                 </List>
-
             </Box>
+        );
+    } else {
+        songBox = <Box></Box>;
     }
-    else {
-        songBox =
-            <Box></Box>
-    }
-    
-    let cardElement =
+
+    useEffect(() => {
+        if (store.currentList !== null) {
+            setExpanded(idNamePair.name === store.currentList.name);
+        }
+    }, [store.currentList]);
+
+    let cardElement = (
         <ListItem
             id={idNamePair._id}
             key={idNamePair._id}
-            sx={{ marginTop: '10px', display: 'grid'}}
-            style={{ width: '100%', fontSize: '30pt' }}
+            sx={{ marginTop: "10px", display: "grid" }}
+            style={{ width: "100%", fontSize: "30pt" }}
             // button
             // onClick={(event) => {
             //     handleLoadList(event, idNamePair._id)
             // }}
         >
-            <Box sx={{display: 'flex', width: '32vw', justifyContent: 'space-between'}}>
+            <Box
+                sx={{
+                    display: "flex",
+                    width: "32vw",
+                    justifyContent: "space-between",
+                }}
+            >
                 <Box>{idNamePair.name}</Box>
-                <Box sx={{display: 'flex'}}>
+                <Box sx={{ display: "flex" }}>
                     <Box>
-                        <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                            <ThumbUpOffAltIcon style={{fontSize:'22pt'}} />
+                        <IconButton
+                            onClick={handleToggleEdit}
+                            aria-label="edit"
+                        >
+                            <ThumbUpOffAltIcon style={{ fontSize: "22pt" }} />
                         </IconButton>
                     </Box>
                     <Box>
-                        <IconButton onClick={(event) => {
-                                handleDeleteList(event, idNamePair._id)
-                            }} aria-label='delete'>
-                            <ThumbDownOffAltIcon style={{fontSize:'22pt'}} />
+                        <IconButton
+                            onClick={(event) => {
+                                handleDeleteList(event, idNamePair._id);
+                            }}
+                            aria-label="delete"
+                        >
+                            <ThumbDownOffAltIcon style={{ fontSize: "22pt" }} />
                         </IconButton>
                     </Box>
                 </Box>
@@ -180,23 +219,32 @@ function ListCard(props) {
 
             {songBox}
 
-            <Box sx={{display: 'flex'}}>
+            <Box sx={{ display: "flex" }}>
                 <Typography>By: Louis Feng</Typography>
             </Box>
 
-            <Box sx={{display: 'flex', width: '32vw', justifyContent: 'space-between'}}>
-                <Typography sx={{color: 'green'}}>Published: </Typography>
-                <Typography sx={{color: 'red'}}>Listens: </Typography>
-                <IconButton onClick={(event) => {
-                    handleSelect(event, idNamePair._id);
-                }}> 
-                    <KeyboardDoubleArrowDownIcon style={{fontSize:'22pt'}}></KeyboardDoubleArrowDownIcon>
+            <Box
+                sx={{
+                    display: "flex",
+                    width: "32vw",
+                    justifyContent: "space-between",
+                }}
+            >
+                <Typography sx={{ color: "green" }}>Published: </Typography>
+                <Typography sx={{ color: "red" }}>Listens: </Typography>
+                <IconButton
+                    onClick={(event) => {
+                        handleSelect(event, idNamePair._id);
+                    }}
+                >
+                    {expandButton}
                 </IconButton>
             </Box>
         </ListItem>
+    );
 
     if (editActive) {
-        cardElement =
+        cardElement = (
             <TextField
                 margin="normal"
                 required
@@ -205,18 +253,17 @@ function ListCard(props) {
                 label="Playlist Name"
                 name="name"
                 autoComplete="Playlist Name"
-                className='list-card'
+                className="list-card"
                 onKeyPress={handleKeyPress}
                 onChange={handleUpdateText}
                 defaultValue={idNamePair.name}
-                inputProps={{style: {fontSize: 48}}}
-                InputLabelProps={{style: {fontSize: 24}}}
+                inputProps={{ style: { fontSize: 48 } }}
+                InputLabelProps={{ style: { fontSize: 24 } }}
                 autoFocus
             />
+        );
     }
-    return (
-        cardElement
-    );
+    return cardElement;
 }
 
 export default ListCard;

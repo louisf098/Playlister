@@ -39,7 +39,7 @@ export default function RegisterScreen() {
             <CssBaseline />
             <Box
                 sx={{
-                    marginTop: 8,
+                    marginTop: 2,
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
@@ -77,6 +77,16 @@ export default function RegisterScreen() {
                                 label="Last Name"
                                 name="lastName"
                                 autoComplete="lname"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                fullWidth
+                                id="username"
+                                label="User Name"
+                                name="username"
+                                autoComplete="username"
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -122,7 +132,7 @@ export default function RegisterScreen() {
                     </Button>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
-                            <Link href="/login/" variant="body2">
+                            <Link href="/login/" variant="body2" sx={{color: 'black'}}>
                                 Already have an account? Sign in
                             </Link>
                         </Grid>

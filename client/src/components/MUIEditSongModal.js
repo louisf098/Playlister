@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import GlobalStoreContext from '../store';
 import * as React from 'react';
 import Box from '@mui/material/Box';
@@ -22,9 +22,9 @@ const style = {
 
 export default function MUIEditSongModal() {
     const { store } = useContext(GlobalStoreContext);
-    const [ title, setTitle ] = useState(store.currentSong.title);
-    const [ artist, setArtist ] = useState(store.currentSong.artist);
-    const [ youTubeId, setYouTubeId ] = useState(store.currentSong.youTubeId);
+    const [ title, setTitle ] = useState(store.currentSong===null ? "" : store.currentSong.title);
+    const [ artist, setArtist ] = useState(store.currentSong===null ? "" : store.currentSong.artist);
+    const [ youTubeId, setYouTubeId ] = useState(store.currentSong===null ? "" : store.currentSong.youTubeId);
 
     function handleConfirmEditSong() {
         let newSongData = {
@@ -51,9 +51,17 @@ export default function MUIEditSongModal() {
         setYouTubeId(event.target.value);
     }
 
+    useEffect((() => {
+        if (store.currentSong !== null) {
+            setTitle(store.currentSong.title);
+            setArtist(store.currentSong.artist);
+            setYouTubeId(store.currentSong.youTubeId);
+        }
+    }), [store.currentSong])
+
     return (
         <Modal
-            open={store.isEditSongModalOpen()}
+            open={store.isEditSongModalOpen() && store.currentSong !== null}
         >
             <Box sx={style}>
                 <Box component="div" className="modal is-visible" id="edit-song-modal" data-animation="slideInOutLeft"> 

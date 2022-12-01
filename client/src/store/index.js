@@ -358,6 +358,7 @@ function GlobalStoreContextProvider(props) {
         return store.currentModal === CurrentModal.DELETE_LIST;
     }
     store.isEditSongModalOpen = () => {
+        console.log(store.currentSong);
         return store.currentModal === CurrentModal.EDIT_SONG;
     }
     store.isRemoveSongModalOpen = () => {

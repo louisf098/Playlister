@@ -96,6 +96,7 @@ export default function AppBanner() {
 
     const handleSortByName = () => {
         store.sortByName();
+        handleMenuClose();
     }
 
 

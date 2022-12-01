@@ -30,6 +30,7 @@ const playlistSchema = new Schema(
             type: Boolean,
         }], required: true },
         isPublished: { type: Boolean, required: true },
+        publishedAt: { type: String, required: true },
     },
     { timestamps: true },
 )

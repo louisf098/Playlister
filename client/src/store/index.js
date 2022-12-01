@@ -314,7 +314,12 @@ function GlobalStoreContextProvider(props) {
         const response = await api.createPlaylist(
             newListName,
             [],
-            auth.user.email
+            auth.user.email,
+            [],
+            [],
+            [],
+            [],
+            false,
         );
         console.log("createNewList response: " + response);
         if (response.status === 201) {

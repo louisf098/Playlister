@@ -262,6 +262,7 @@ function ListCard(props) {
         } else {
             //close same list
             store.resetCurrentList();
+            setExpanded(false);
             setClicked(false);
         }
     }
@@ -328,7 +329,7 @@ function ListCard(props) {
                     justifyContent: "space-between",
                 }}
             >
-                <Typography sx={{ color: "green" }}>Published: </Typography>
+                <Typography sx={{ color: "green" }}>Published: {playlist!==undefined ? playlist.publishedAt : ""}</Typography>
                 <Typography sx={{ color: "red" }}>Listens: </Typography>
                 <IconButton
                     onClick={(event) => {

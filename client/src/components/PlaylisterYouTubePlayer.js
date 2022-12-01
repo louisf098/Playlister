@@ -9,7 +9,7 @@ export default function YouTubePlayerExample() {
 
     // THIS HAS THE YOUTUBE IDS FOR THE SONGS IN OUR PLAYLIST
     let playlist = [
-        "mqmxkGjow1A",
+        "aGD_gJtiuak",
         "8RbXIMZmVv8",
         "8UbNbor3OqQ"
     ];

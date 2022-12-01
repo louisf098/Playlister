@@ -74,6 +74,9 @@ export default function SplashScreen() {
                             Login as Guest
                         </Button>
                     </Grid>
+                    <Grid item xs={12}>
+                        <Typography sx={{mt: '5%'}}>Created By: Louis Feng</Typography>
+                    </Grid>
                 </Grid>
             </Grid>
         </Box>

@@ -30,6 +30,7 @@ function ListCard(props) {
     const [text, setText] = useState("");
     const { idNamePair, selected } = props;
     const [expanded, setExpanded] = useState(false);
+    const [clicked, setClicked] = useState(false);
 
     function handleLoadList(event, id) {
         console.log("handleLoadList for " + id);
@@ -97,6 +98,9 @@ function ListCard(props) {
     }
     function handleRedo() {
         store.redo();
+    }
+    function handleChoose() {
+
     }
 
     let selectClass = "unselected-list-card";
@@ -226,8 +230,9 @@ function ListCard(props) {
     }
 
     useEffect(() => {
-        if (store.currentList !== null) {
+        if (store.currentList !== null ) {
             setExpanded(idNamePair.name === store.currentList.name);
+            setClicked(idNamePair.name === store.currentList.name);
         }
     }, [store.currentList]);
 
@@ -241,26 +246,51 @@ function ListCard(props) {
     });
     playlist = playlist[0];
     console.log(playlist);
+    
+    let publishedBy = "";
+    if (playlist !== undefined) {
+        publishedBy = playlist.ownerEmail;
+    }
+
+    function handleSetClick(event, id) {
+        if (store.currentList === null) {
+            //load in
+            store.setCurrentList(id);
+        } else if (store.currentList.name !== idNamePair.name) {
+            //select another list while one list is open
+            store.setCurrentList(id);
+        } else {
+            //close same list
+            store.resetCurrentList();
+            setClicked(false);
+        }
+    }
+
+    let listCardStyles = { marginTop: "10px", display: "grid", width: "100%", fontSize: "30pt", cursor: "pointer"};
+    if (clicked) {
+        listCardStyles = { marginTop: "10px", display: "grid", width: "100%", fontSize: "30pt", cursor: "pointer", bgcolor: '#8561c5'};
+    }
+
 
     let cardElement = (
         <ListItem
             id={idNamePair._id}
             key={idNamePair._id}
-            sx={{ marginTop: "10px", display: "grid" }}
-            style={{ width: "100%", fontSize: "30pt" }}
-            // button
-            // onClick={(event) => {
-            //     handleLoadList(event, idNamePair._id)
-            // }}
+            sx={listCardStyles}
+            onClick={(event) => {
+                handleSetClick(event, idNamePair._id);
+            }}
         >
             <Box
                 sx={{
                     display: "flex",
-                    width: "32vw",
                     justifyContent: "space-between",
+                    width: '100%',
+                    maxWidth: '100%',
+                    flexDirection: 'row',
                 }}
             >
-                <Box>{idNamePair.name}</Box>
+                <Box sx={{ fontSize: '80%' }}>{idNamePair.name}</Box>
                 <Box sx={{ display: "flex" }}>
                     <Box>
                         <IconButton
@@ -288,7 +318,7 @@ function ListCard(props) {
             {workspaceButtons}
 
             <Box sx={{ display: "flex" }}>
-                <Typography>By: Louis Feng</Typography>
+                <Typography>By: {publishedBy}</Typography>
             </Box>
 
             <Box

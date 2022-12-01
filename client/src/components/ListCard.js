@@ -231,8 +231,16 @@ function ListCard(props) {
         }
     }, [store.currentList]);
 
-
-    // When there is no list cards, add list does not loadIdNamePairs
+    // gets corresponding playlist object
+    let playlist = null;
+    useEffect(() => {
+        store.setAllPlaylists();
+    }, []);
+    playlist = store.allPlaylists.filter(function (list) {
+        return list._id === idNamePair._id;
+    });
+    playlist = playlist[0];
+    console.log(playlist);
 
     let cardElement = (
         <ListItem

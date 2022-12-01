@@ -18,6 +18,7 @@ const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
 
     useEffect(() => {
+        store.setAllPlaylists();
         store.loadIdNamePairs();
     }, []);
 

@@ -38,10 +38,9 @@ export default function MUIRemoveSongModal() {
     if (store.currentSong) {
         songTitle = store.currentSong.title;
     }
-    const song = store.currentSong;
 
     return (
-        <Modal open={store.isRemoveSongModalOpen}>
+        <Modal open={store.isRemoveSongModalOpen()}>
             <Box sx={style}>
                 <Box component="div" classname="modal-root" id='verify-remove-song-root'>
                     <Stack>
@@ -50,7 +49,7 @@ export default function MUIRemoveSongModal() {
                         </Box>
                         <br></br>
                         <Box sx={{fontSize: '20px'}}>
-                            Are you sure you want to remove {song.title} from this playlist?
+                            Are you sure you want to remove {songTitle} from this playlist?
                         </Box>
                         <Box sx={{width: '350px'}}>
                             <Button variant="contained" sx={{marginLeft: '60px', marginTop: '20px'}} onClick={handleConfirmRemoveSong}>Confirm</Button>

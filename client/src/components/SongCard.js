@@ -76,7 +76,7 @@ function SongCard(props) {
                     {song.title} by {song.artist}
                 </a>
             </Box>
-            <IconButton sx={{float: "right"}}>
+            <IconButton onClick={handleRemoveSong} sx={{float: "right"}}>
                 <ClearIcon sx={{size: "medium", color: "grey"}}></ClearIcon>
             </IconButton>
         </div>

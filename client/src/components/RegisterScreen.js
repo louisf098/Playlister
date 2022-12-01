@@ -79,16 +79,16 @@ export default function RegisterScreen() {
                                 autoComplete="lname"
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        {/* <Grid item xs={12}>
                             <TextField
-                                required
+                                //required
                                 fullWidth
                                 id="username"
                                 label="User Name"
                                 name="username"
                                 autoComplete="username"
                             />
-                        </Grid>
+                        </Grid> */}
                         <Grid item xs={12}>
                             <TextField
                                 required

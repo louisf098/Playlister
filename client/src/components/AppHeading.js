@@ -21,7 +21,7 @@ import InputBase from '@mui/material/InputBase';
 import HomeIcon from '@mui/icons-material/Home';
 import GroupsIcon from '@mui/icons-material/Groups';
 import PersonIcon from '@mui/icons-material/Person';
-import MenuIcon from '@mui/icons-material/Menu';
+import SortIcon from '@mui/icons-material/Sort';
 import SearchIcon from '@mui/icons-material/Search';
 
 export default function AppBanner() {
@@ -29,28 +29,6 @@ export default function AppBanner() {
     const { store } = useContext(GlobalStoreContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
-
-    const handleProfileMenuOpen = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-    };
-
-    const handleLogout = () => {
-        handleMenuClose();
-        store.resetCurrentList();
-        auth.logoutUser();
-    }
-
-    const handleClearTps = () => {
-        store.clearTransactions();
-    }
-
-    const testing = () => {
-        console.log("hi");
-    }
 
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
@@ -90,9 +68,35 @@ export default function AppBanner() {
         justifyContent: 'center',
       }));
 
+    const handleProfileMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleLogout = () => {
+        handleMenuClose();
+        store.resetCurrentList();
+        auth.logoutUser();
+    }
+
+    const handleClearTps = () => {
+        store.clearTransactions();
+    }
+
+    const testing = () => {
+        console.log("hi");
+    }
+
     const handleOpenSort = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
+    const handleSortByName = () => {
+        store.sortByName();
+    }
 
 
     return (
@@ -126,7 +130,7 @@ export default function AppBanner() {
                     <Box sx={{display: 'flex', ml: "auto"}}>
                         <Typography sx={{mt: 1}}>Sort By</Typography>
                         <IconButton onClick={handleOpenSort}>
-                            <MenuIcon sx={{color: "white"}}></MenuIcon>
+                            <SortIcon sx={{color: "white"}}></SortIcon>
                         </IconButton>
                     </Box>
                     <Menu
@@ -144,9 +148,11 @@ export default function AppBanner() {
                         horizontal: 'left',
                         }}
                     >
-                        <MenuItem onClick={handleMenuClose}>Sort By</MenuItem>
-                        <MenuItem onClick={handleMenuClose}>Sort By</MenuItem>
-                        <MenuItem onClick={handleMenuClose}>Sort By</MenuItem>
+                        <MenuItem onClick={handleSortByName}>Name (A-Z)</MenuItem>
+                        <MenuItem onClick={handleMenuClose}>Publish Date (Newest)</MenuItem>
+                        <MenuItem onClick={handleMenuClose}>Listens (High - Low)</MenuItem>
+                        <MenuItem onClick={handleMenuClose}>Likes (High - Low)</MenuItem>
+                        <MenuItem onClick={handleMenuClose}>Dislikes (High - Low)</MenuItem>
                     </Menu>
                 </Toolbar>
             </AppBar> 

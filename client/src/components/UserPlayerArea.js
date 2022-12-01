@@ -97,7 +97,9 @@ function UserPlayerArea() {
                 </Box>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                Item 2 Detail
+                <Box sx={{display: 'flex', flexDirection: 'column', fontFamily: "'Merriweather', serif" }}>
+                    {/* Map through playlsits comments and create a list of list items for each comment */}
+                </Box>
             </TabPanel>
         </Box>
     );

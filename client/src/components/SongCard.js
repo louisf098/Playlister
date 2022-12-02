@@ -41,16 +41,15 @@ function SongCard(props) {
             store.addMoveSongTransaction(sourceIndex, targetIndex);
     }
     function handleRemoveSong(event) {
+        event.stopPropagation();
         store.showRemoveSongModal(index, song);
     }
     function handleClick(event) {
         // DOUBLE CLICK IS FOR SONG EDITING
+        event.stopPropagation();
         if (event.detail === 2) {
             store.showEditSongModal(index, song);
         }
-    }
-    function handleDoubleClick() {
-        store.showEditSongModal(index, song);
     }
 
     let cardClass = "list-card unselected-list-card";
@@ -65,7 +64,9 @@ function SongCard(props) {
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
             draggable="true"
-            onDoubleClick={handleDoubleClick}
+            onClick={(event) => {
+                handleClick(event);
+            }}
             style={{display: "flex", justifyContent: 'space-between'}}
         >   <Box>
                 {index + 1}.
@@ -76,7 +77,7 @@ function SongCard(props) {
                     {song.title} by {song.artist}
                 </a>
             </Box>
-            <IconButton onClick={handleRemoveSong} sx={{float: "right"}}>
+            <IconButton onClick={(event) => {handleRemoveSong(event)}} sx={{float: "right", zIndex: '6'}}>
                 <ClearIcon sx={{size: "medium", color: "grey"}}></ClearIcon>
             </IconButton>
         </div>

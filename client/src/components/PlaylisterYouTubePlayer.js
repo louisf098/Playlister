@@ -1,4 +1,6 @@
 import React from 'react';
+import { useContext, useState, useEffect } from "react";
+import { GlobalStoreContext } from "../store";
 import YouTube from 'react-youtube';
 
 export default function YouTubePlayerExample() {
@@ -6,13 +8,17 @@ export default function YouTubePlayerExample() {
     // YOUTUBE PLAYER AND EMBED IT IN YOUR SITE. IT ALSO
     // DEMONSTRATES HOW TO IMPLEMENT A PLAYLIST THAT MOVES
     // FROM ONE SONG TO THE NEXT
+    const { store } = useContext(GlobalStoreContext);
 
     // THIS HAS THE YOUTUBE IDS FOR THE SONGS IN OUR PLAYLIST
-    let playlist = [
-        "aGD_gJtiuak",
-        "8RbXIMZmVv8",
-        "8UbNbor3OqQ"
-    ];
+    const[playlist, setPlaylist] = useState([]);
+    
+    useEffect(()=> {
+        if (store.playingPlaylist !== null) {
+           let arr = store.playingPlaylist.songs.map(song => song.youTubeId);
+           setPlaylist(arr);
+        }
+    }, [store.playingPlaylist]);
 
     // THIS IS THE INDEX OF THE SONG CURRENTLY IN USE IN THE PLAYLIST
     let currentSong = 0;

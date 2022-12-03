@@ -106,13 +106,16 @@ function ListCard(props) {
     function handleUpdateText(event) {
         setText(event.target.value);
     }
-    function handleAddNewSong() {
+    function handleAddNewSong(event) {
+        event.stopPropagation();
         store.addNewSong();
     }
-    function handleUndo() {
+    function handleUndo(event) {
+        event.stopPropagation();
         store.undo();
     }
-    function handleRedo() {
+    function handleRedo(event) {
+        event.stopPropagation();
         store.redo();
     }
 
@@ -180,7 +183,9 @@ function ListCard(props) {
                                     color: "white",
                                 },
                             }}
-                            onClick={handleAddNewSong}
+                            onClick={(event) => {
+                                handleAddNewSong(event)
+                            }}
                         >
                             +
                         </Button>
@@ -205,14 +210,18 @@ function ListCard(props) {
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <Box>
                     <Button
-                        onClick={handleUndo}
+                        onClick={(event) => {
+                            handleUndo(event)
+                        }}
                         variant="contained"
                         sx={workspaceButtonStyles}
                     >
                         Undo
                     </Button>
                     <Button
-                        onClick={handleRedo}
+                        onClick={(event) => {
+                            handleRedo(event)
+                        }}
                         variant="contained"
                         sx={workspaceButtonStyles}
                     >

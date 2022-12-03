@@ -47,6 +47,7 @@ function ListCard(props) {
     }
 
     function handleSelect(event, id) {
+        event.stopPropagation();
         if (store.currentList === null) {
             //load in
             store.setCurrentList(id);
@@ -57,6 +58,21 @@ function ListCard(props) {
             //close same list
             store.resetCurrentList();
             setExpanded(false);
+        }
+    }
+
+    function handlePlay(event, id) {
+        event.stopPropagation();
+        if (store.playingPlaylist === null) {
+            //load in
+            store.setPlayingList(id);
+        } else if (store.playingPlaylist.name !== idNamePair.name) {
+            //select another list while one list is open
+            store.setPlayingList(id);
+        } else {
+            //close same list
+            store.resetPlayingList();
+            setClicked(false);
         }
     }
 
@@ -98,9 +114,6 @@ function ListCard(props) {
     }
     function handleRedo() {
         store.redo();
-    }
-    function handleChoose() {
-
     }
 
     let selectClass = "unselected-list-card";
@@ -229,13 +242,6 @@ function ListCard(props) {
         workspaceButtons = <Box></Box>;
     }
 
-    useEffect(() => {
-        if (store.currentList !== null ) {
-            setExpanded(idNamePair.name === store.currentList.name);
-            setClicked(idNamePair.name === store.currentList.name);
-        }
-    }, [store.currentList]);
-
     // gets corresponding playlist object
     let playlist = null;
     useEffect(() => {
@@ -245,32 +251,28 @@ function ListCard(props) {
         return list._id === idNamePair._id;
     });
     playlist = playlist[0];
-    console.log(playlist);
     
     let publishedBy = "";
     if (playlist !== undefined) {
         publishedBy = playlist.ownerEmail;
     }
 
-    function handleSetClick(event, id) {
-        if (store.currentList === null) {
-            //load in
-            store.setCurrentList(id);
-        } else if (store.currentList.name !== idNamePair.name) {
-            //select another list while one list is open
-            store.setCurrentList(id);
-        } else {
-            //close same list
-            store.resetCurrentList();
-            setExpanded(false);
-            setClicked(false);
-        }
-    }
-
     let listCardStyles = { marginTop: "10px", display: "grid", width: "100%", fontSize: "30pt", cursor: "pointer"};
     if (clicked) {
         listCardStyles = { marginTop: "10px", display: "grid", width: "100%", fontSize: "30pt", cursor: "pointer", bgcolor: '#8561c5'};
     }
+
+    useEffect(() => {
+        if (store.currentList !== null ) {
+            setExpanded(idNamePair.name === store.currentList.name);
+        }
+    }, [store.currentList]);
+
+    useEffect(() => {
+        if (store.playingPlaylist !== null ) {
+            setClicked(idNamePair.name === store.playingPlaylist.name);
+        }
+    }, [store.playingPlaylist]);
 
 
     let cardElement = (
@@ -279,7 +281,7 @@ function ListCard(props) {
             key={idNamePair._id}
             sx={listCardStyles}
             onClick={(event) => {
-                handleSetClick(event, idNamePair._id);
+                handlePlay(event, idNamePair._id);
             }}
         >
             <Box

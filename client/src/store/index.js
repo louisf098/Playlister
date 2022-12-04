@@ -34,7 +34,8 @@ export const GlobalStoreActionType = {
     SET_ALL_PLAYLISTS: "SET_ALL_PLAYLISTS",
     SET_PLAYING_PLAYLIST: "SET_PLAYING_PLAYLIST",
     SET_PLAYING_SONG: "SET_PLAYING_SONG",  
-    INCREMENT_PUBLISH_COUNT: "INCREMENT_PUBLISH_COUNT"  
+    INCREMENT_PUBLISH_COUNT: "INCREMENT_PUBLISH_COUNT",
+    SET_CURRENT_SCREEN: "SET_CURRENT_SCREEN"
 };
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -152,7 +153,7 @@ function GlobalStoreContextProvider(props) {
             case GlobalStoreActionType.LOAD_ID_NAME_PAIRS: {
                 return setStore({
                     currentModal: CurrentModal.NONE,
-                    idNamePairs: payload,
+                    idNamePairs: payload.pairsArray,
                     currentList: store.currentList,
                     currentSongIndex: -1,
                     currentSong: null,
@@ -160,7 +161,7 @@ function GlobalStoreContextProvider(props) {
                     listNameActive: false,
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
-                    allPlaylists: store.allPlaylists,
+                    allPlaylists: payload.playlists,
                     playingPlaylist: store.playingPlaylist,
                     playingSong: store.playingSong,
                     playingSongIndex: store.playingSongIndex,
@@ -362,6 +363,25 @@ function GlobalStoreContextProvider(props) {
                     currentScreen: store.currentScreen,
                 });
             }
+            case GlobalStoreActionType.SET_CURRENT_SCREEN: {
+                return setStore({
+                    currentModal: CurrentModal.NONE,
+                    idNamePairs: store.idNamePairs,
+                    currentList: store.currentList,
+                    currentSongIndex: -1,
+                    currentSong: null,
+                    newListCounter: store.newListCounter,
+                    listNameActive: false,
+                    listIdMarkedForDeletion: null,
+                    listMarkedForDeletion: null,
+                    allPlaylists: store.allPlaylists,
+                    playingPlaylist: store.playingPlaylist,
+                    playingSong: store.playingSong,
+                    playingSongIndex: store.playingSongIndex,
+                    publishCounter: store.publishCounter,
+                    currentScreen: payload,
+                });
+            }
             default:
                 return store;
         }
@@ -375,7 +395,11 @@ function GlobalStoreContextProvider(props) {
             let response = await api.getPlaylists();
             if (response.data.success) {
                 let playlists = response.data.data;
-                console.log(playlists);
+                if (store.currentScreen === "ALL_LISTS") {
+                    playlists = playlists.filter(function (playlist) {
+                        return playlist.isPublished;
+                    })
+                }
                 storeReducer({
                     type: GlobalStoreActionType.SET_ALL_PLAYLISTS,
                     payload: playlists
@@ -466,15 +490,45 @@ function GlobalStoreContextProvider(props) {
     // THIS FUNCTION LOADS ALL THE ID, NAME PAIRS SO WE CAN LIST ALL THE LISTS
     store.loadIdNamePairs = function () {
         async function asyncLoadIdNamePairs() {
-            const response = await api.getPlaylistPairs();
-            if (response.data.success) {
-                let pairsArray = response.data.idNamePairs;
-                storeReducer({
-                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
-                    payload: pairsArray,
-                });
-            } else {
-                console.log("API FAILED TO GET THE LIST PAIRS");
+            if (store.currentScreen === "NONE" || store.currentScreen === "HOME") {
+                let response = await api.getPlaylistPairs();
+                if (response.data.success) {
+                    let pairsArray = response.data.idNamePairs;
+                    let res = await api.getPlaylists();
+                    if (res.data.success) {
+                        let playlists = res.data.data;
+                        storeReducer({
+                            type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                            payload: {pairsArray: pairsArray, playlists: playlists},
+                        });
+                    }
+                } else {
+                    console.log("API FAILED TO GET THE LIST PAIRS");
+                }
+            }
+            if (store.currentScreen === "ALL_LISTS") {
+                const response = await api.getPlaylists();
+                if (response.data.success) {
+                    let playlists = response.data.data;
+                    playlists = playlists.filter(function (playlist) {
+                        return playlist.isPublished
+                    })
+                    let pairs = [];
+                    for (let key in playlists) {
+                        let list = playlists[key];
+                        let pair = {
+                            _id: list._id,
+                            name: list.name
+                        };
+                        pairs.push(pair);
+                    }
+                    storeReducer({
+                        type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                        payload: {pairsArray: pairs, playlists: playlists},
+                    });
+                } else {
+                    console.log("API FAILED TO GET THE LIST PAIRS");
+                }
             }
         }
         asyncLoadIdNamePairs();
@@ -803,6 +857,13 @@ function GlobalStoreContextProvider(props) {
         }
         publishId(id);
 }
+
+    store.setCurrentScreen = function (screen) {
+        storeReducer({
+            type: GlobalStoreActionType.SET_CURRENT_SCREEN,
+            payload: screen,
+        });
+    }
 
     return (
         <GlobalStoreContext.Provider

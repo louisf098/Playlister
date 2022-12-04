@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
     
     @author McKilla Gorilla
 */
-const HomeScreen = () => {
+const AllListsScreen = () => {
     const { store } = useContext(GlobalStoreContext);
 
     useEffect(() => {
@@ -22,14 +22,12 @@ const HomeScreen = () => {
     }, []);
 
     useEffect(() => {
-        if (store.currentScreen === "NONE" || store.currentScreen === "HOME"){ 
-            store.loadIdNamePairs();
-        }
+        store.loadIdNamePairs();
     }, [store.newListCounter]);
 
-    function handleCreateNewList() {
-        store.createNewList();
-    }
+    console.log(store.idNamePairs);
+    console.log(store.allPlaylists);
+
     let listCard = "";
     if (store) {
         listCard = (
@@ -49,17 +47,6 @@ const HomeScreen = () => {
     return (
         <Box>
             <div>
-                {/* <div id="list-selector-heading" style={{backgroundColor: "#2c387e"}}>
-                <Fab 
-                    color="primary" 
-                    aria-label="add"
-                    id="add-list-button"
-                    onClick={handleCreateNewList}
-                >
-                    <AddIcon />
-                </Fab>
-                    <Typography variant="h2">Your Lists</Typography>
-                </div> */}
                 <AppHeading />
                 <div
                     id="list-selector-list"
@@ -67,6 +54,7 @@ const HomeScreen = () => {
                 >
                     {listCard}
                 </div>
+                
             </div>
 
             <div
@@ -74,7 +62,7 @@ const HomeScreen = () => {
                     float: "right",
                     width: "50%",
                     height: "72vh",
-                    backgroundColor: "#e6e6e6",
+                    backgroundColor: "red",
                 }}
             >
                 <UserPlayerArea />
@@ -83,4 +71,4 @@ const HomeScreen = () => {
     );
 };
 
-export default HomeScreen;
+export default AllListsScreen;

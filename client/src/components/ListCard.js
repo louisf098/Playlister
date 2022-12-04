@@ -35,7 +35,7 @@ function ListCard(props) {
     // gets corresponding playlist object
     let playlist = null;
     useEffect(() => {
-        store.setAllPlaylists();
+        store.loadIdNamePairs();
     }, []);
     playlist = store.allPlaylists.filter(function (list) {
         return list._id === idNamePair._id;

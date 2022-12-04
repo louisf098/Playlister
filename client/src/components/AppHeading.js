@@ -99,16 +99,24 @@ export default function AppBanner() {
         handleMenuClose();
     }
 
+    const handleSetScreenAllLists = () => {
+        store.setCurrentScreen("ALL_LISTS");
+    }
+
+    const handleSetScreenHome = () => {
+        store.setCurrentScreen("HOME");
+    }
+
 
     return (
        <Box>
             <AppBar position="static" sx={{bgcolor: "#3f51b5"}}>
                 <Toolbar>
                     <Box>
-                        <IconButton onClick={testing}>
+                        <IconButton onClick={handleSetScreenHome}>
                             <HomeIcon sx={{fontSize: "22pt", color: "white"}}></HomeIcon>
                         </IconButton>
-                        <IconButton>
+                        <IconButton onClick={handleSetScreenAllLists}>
                             <GroupsIcon sx={{fontSize: "22pt", color: "white"}}></GroupsIcon>
                         </IconButton>
                         <IconButton>

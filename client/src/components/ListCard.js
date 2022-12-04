@@ -118,6 +118,10 @@ function ListCard(props) {
         event.stopPropagation();
         store.redo();
     }
+    function handlePublish(event, id) {
+        event.stopPropagation();
+        store.publishPlaylist(id);
+    }
 
     let selectClass = "unselected-list-card";
     if (selected) {
@@ -229,7 +233,7 @@ function ListCard(props) {
                     </Button>
                 </Box>
                 <Box>
-                    <Button variant="contained" sx={workspaceButtonStyles}>
+                    <Button onClick={(event) => {handlePublish(event, idNamePair._id)}} variant="contained" sx={workspaceButtonStyles}>
                         Publish
                     </Button>
                     <Button

@@ -70,12 +70,9 @@ function SongCard(props) {
             style={{display: "flex", justifyContent: 'space-between'}}
         >   <Box>
                 {index + 1}.
-                <a
-                    id={'song-' + index + '-link'}
-                    className="song-link"
-                    href={"https://www.youtube.com/watch?v=" + song.youTubeId}>
-                    {song.title} by {song.artist}
-                </a>
+
+                {song.title} by {song.artist}
+        
             </Box>
             <IconButton onClick={(event) => {handleRemoveSong(event)}} sx={{float: "right", zIndex: '6'}}>
                 <ClearIcon sx={{size: "medium", color: "grey"}}></ClearIcon>

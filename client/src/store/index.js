@@ -471,6 +471,7 @@ function GlobalStoreContextProvider(props) {
             [],
             [],
             false,
+            auth.user.userName
         );
         console.log("createNewList response: " + response);
         if (response.status === 201) {

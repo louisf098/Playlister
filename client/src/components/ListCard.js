@@ -289,7 +289,7 @@ function ListCard(props) {
     
     let publishedBy = "";
     if (playlist !== undefined) {
-        publishedBy = playlist.ownerEmail;
+        publishedBy = playlist.userName;
     }
 
     let listCardStyles = { marginTop: "10px", display: "grid", width: "100%", fontSize: "30pt", cursor: "pointer"};

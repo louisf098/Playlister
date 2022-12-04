@@ -45,6 +45,15 @@ function UserPlayerArea() {
         songArtist = store.playingSong.artist;
     }
 
+    let playerVisible = {
+        display: true
+    }
+    if (value === 1) {
+        playerVisible = {
+            display: "none"
+        }
+    }
+
     return (
         <Box sx={{ width: "100%" }}>
             <AppBar
@@ -64,8 +73,10 @@ function UserPlayerArea() {
                     <Tab label="Comments" />
                 </Tabs>
             </AppBar>
-            <TabPanel value={value} index={0}>
+            <Box sx={playerVisible}>
                 <YouTubePlayerExample />
+            </Box>
+            <TabPanel value={value} index={0}>
                 <Box
                     sx={{
                         display: "flex",

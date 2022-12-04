@@ -12,7 +12,7 @@ export default function YouTubePlayerExample() {
 
     // THIS HAS THE YOUTUBE IDS FOR THE SONGS IN OUR PLAYLIST
     const[playlist, setPlaylist] = useState([]);
-    
+
     useEffect(()=> {
         if (store.playingPlaylist !== null) {
            let arr = store.playingPlaylist.songs.map(song => song.youTubeId);
@@ -36,6 +36,10 @@ export default function YouTubePlayerExample() {
     // THE PLAYER AND PLAYS IT
     function loadAndPlayCurrentSong(player) {
         let song = playlist[currentSong];
+        if (store.playingPlaylist !== null) {
+            let songObject = store.playingPlaylist.songs[currentSong];
+            store.setPlayingSong(songObject, currentSong+1);
+        }
         player.loadVideoById(song);
         player.playVideo();
     }

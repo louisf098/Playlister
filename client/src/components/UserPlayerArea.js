@@ -31,6 +31,20 @@ function UserPlayerArea() {
         setValue(newValue);
     };
 
+    let playlistName = "";
+    if (store.playingPlaylist !== null) {
+        playlistName = store.playingPlaylist.name;
+    }
+
+    let songNum = "";
+    let songTitle = "";
+    let songArtist = "";
+    if (store.playingSong !== null) {
+        songNum = store.playingSongIndex;
+        songTitle = store.playingSong.title;
+        songArtist = store.playingSong.artist;
+    }
+
     return (
         <Box sx={{ width: "100%" }}>
             <AppBar
@@ -66,10 +80,10 @@ function UserPlayerArea() {
                         <Typography>Now Playing</Typography>
                     </Box>
                     <Box sx={{ display: "flex", flexDirection: "column" }}>
-                        <Typography>Playlist:</Typography>
-                        <Typography>Song #:</Typography>
-                        <Typography>Title:</Typography>
-                        <Typography>Artist:</Typography>
+                        <Typography>Playlist: {playlistName}</Typography>
+                        <Typography>Song #: {songNum}</Typography>
+                        <Typography>Title: {songTitle}</Typography>
+                        <Typography>Artist: {songArtist}</Typography>
                     </Box>
                     <Box
                         sx={{

@@ -66,13 +66,18 @@ function UserPlayerArea() {
     let comments = "yay";
     if (store.playingPlaylist !== null && store.playingPlaylist.comments !== []) {
     comments =
-        <Box>
+        <Box sx={{maxHeight: '58vh', overflow: 'auto'}}>
             <List>
                 {store.playingPlaylist.comments.map((comment) => (
                     <ListItem>
-                        <Typography>
-                            {comment.text}
-                        </Typography>
+                        <Box sx={{bgcolor: '#8561c5', width: '36vw', border: '2px solid black', borderRadius: '8px', padding: '5px'}}>
+                            <Typography sx={{fontSize: '15px', color: '#002884'}}>
+                                {comment.userName}
+                            </Typography>
+                            <Typography sx={{fontSize: '18px'}}>
+                                {comment.text}
+                            </Typography>
+                        </Box>
                     </ListItem>
                 ))}
             </List>
@@ -147,7 +152,7 @@ function UserPlayerArea() {
                 </Box>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <Box sx={{display: 'flex', flexDirection: 'column', fontFamily: "'Merriweather', serif", bgcolor: '#D3D3D3', maxHeight: '66vh', height: '66vh', scroll: 'auto' }}>
+                <Box sx={{display: 'flex', flexDirection: 'column', fontFamily: "'Merriweather', serif", bgcolor: '#D3D3D3', maxHeight: '66vh', height: '66vh'}}>
                     {/* Map through playlsits comments and create a list of list items for each comment */}
                     <Box sx={{flexGrow: 1}}>
                         { comments }

@@ -11,6 +11,8 @@ import Tab from "@mui/material/Tab";
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import IconButton from '@mui/material/IconButton';
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
 
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import StopIcon from '@mui/icons-material/Stop';
@@ -54,8 +56,24 @@ function UserPlayerArea() {
         }
     }
 
+    let comments = "yay";
+    if (store.playingPlaylist !== null && store.playingPlaylist.comments !== []) {
+    comments =
+        <Box>
+            <List>
+                {store.playingPlaylist.comments.map((comment) => (
+                    <ListItem>
+                        <Typography>
+                            {comment.text}
+                        </Typography>
+                    </ListItem>
+                ))}
+            </List>
+        </Box>
+    }
+
     return (
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: "100%"}}>
             <AppBar
                 sx={{
                     position: "sticky",
@@ -124,6 +142,7 @@ function UserPlayerArea() {
             <TabPanel value={value} index={1}>
                 <Box sx={{display: 'flex', flexDirection: 'column', fontFamily: "'Merriweather', serif" }}>
                     {/* Map through playlsits comments and create a list of list items for each comment */}
+                    { comments }
                 </Box>
             </TabPanel>
         </Box>

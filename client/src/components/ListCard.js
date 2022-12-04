@@ -287,6 +287,47 @@ function ListCard(props) {
         }
     }, [store.playingPlaylist]);
 
+    useEffect(() => {
+        if (store.publishCounter !== -1) {
+            store.setAllPlaylists();
+        }
+    }, [store.publishCounter])
+    
+    let likeAndDislike = "";
+    let publishedAndListens = "";
+    if (playlist !== undefined && playlist.isPublished) {
+        publishedAndListens =
+            <Box sx={{display: 'flex', flexGrow: 1, justifyContent: 'space-between', mr: '10px'}}>
+                <Typography sx={{ color: "#1b5e20" }}>Published: {playlist!==undefined && playlist.isPublished ? playlist.publishedAt : ""}</Typography>
+                <Typography sx={{ color: "red" }}>Listens: </Typography>
+            </Box>
+
+        likeAndDislike =
+            <Box sx={{ display: "flex" }}>
+                <Box>
+                    <IconButton
+                        onClick={handleToggleEdit}
+                        aria-label="edit"
+                    >
+                        <ThumbUpOffAltIcon style={{ fontSize: "22pt" }} />
+                    </IconButton>
+                </Box>
+                <Box>
+                    <IconButton
+                        onClick={(event) => {
+                            handleDeleteList(event, idNamePair._id);
+                        }}
+                        aria-label="delete"
+                    >
+                        <ThumbDownOffAltIcon style={{ fontSize: "22pt" }} />
+                    </IconButton>
+                </Box>
+            </Box>
+
+    }
+    else {
+        publishedAndListens = <Box></Box>
+    }
 
     let cardElement = (
         <ListItem
@@ -307,26 +348,7 @@ function ListCard(props) {
                 }}
             >
                 <Box sx={{ fontSize: '80%' }}>{idNamePair.name}</Box>
-                <Box sx={{ display: "flex" }}>
-                    <Box>
-                        <IconButton
-                            onClick={handleToggleEdit}
-                            aria-label="edit"
-                        >
-                            <ThumbUpOffAltIcon style={{ fontSize: "22pt" }} />
-                        </IconButton>
-                    </Box>
-                    <Box>
-                        <IconButton
-                            onClick={(event) => {
-                                handleDeleteList(event, idNamePair._id);
-                            }}
-                            aria-label="delete"
-                        >
-                            <ThumbDownOffAltIcon style={{ fontSize: "22pt" }} />
-                        </IconButton>
-                    </Box>
-                </Box>
+                {likeAndDislike}
             </Box>
 
             {songBox}
@@ -344,8 +366,7 @@ function ListCard(props) {
                     justifyContent: "space-between",
                 }}
             >
-                <Typography sx={{ color: "green" }}>Published: {playlist!==undefined ? playlist.publishedAt : ""}</Typography>
-                <Typography sx={{ color: "red" }}>Listens: </Typography>
+                {publishedAndListens}
                 <IconButton
                     onClick={(event) => {
                         handleSelect(event, idNamePair._id);

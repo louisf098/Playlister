@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import * as React from "react";
 import { GlobalStoreContext } from "../store";
 import AuthContext from "../auth";
@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import IconButton from '@mui/material/IconButton';
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import TextField from '@mui/material/TextField';
 
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import StopIcon from '@mui/icons-material/Stop';
@@ -27,11 +28,17 @@ import SkipNextIcon from '@mui/icons-material/SkipNext';
 function UserPlayerArea() {
     const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext);
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = useState(0);
+    const [text, setText] = useState("");
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    const handleEnter = (event) => {
+        store.addComment(text);
+        setText("");
+    }
 
     let playlistName = "";
     if (store.playingPlaylist !== null) {
@@ -100,7 +107,7 @@ function UserPlayerArea() {
                         display: "flex",
                         flexDirection: "column",
                         height: "25vh",
-                        bgcolor: "#e6e6e6",
+                        bgcolor: '#D3D3D3',
                         fontFamily: "'Merriweather', serif",
                         flexGrow: 1,
                     }}
@@ -140,9 +147,24 @@ function UserPlayerArea() {
                 </Box>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <Box sx={{display: 'flex', flexDirection: 'column', fontFamily: "'Merriweather', serif" }}>
+                <Box sx={{display: 'flex', flexDirection: 'column', fontFamily: "'Merriweather', serif", bgcolor: '#D3D3D3', maxHeight: '66vh', height: '66vh', scroll: 'auto' }}>
                     {/* Map through playlsits comments and create a list of list items for each comment */}
-                    { comments }
+                    <Box sx={{flexGrow: 1}}>
+                        { comments }
+                    </Box>
+                    <TextField id="filled-basic" label="Add Comment" variant="filled" 
+                        onKeyPress={(ev) => {
+                            console.log(`Pressed keyCode ${ev.key}`);
+                            if (ev.key === 'Enter') {
+                              handleEnter();
+                              ev.preventDefault();
+                            }
+                          }}
+                        value={text}
+                        onChange={(ev) => {
+                            setText(ev.target.value);
+                        }}
+                    />
                 </Box>
             </TabPanel>
         </Box>

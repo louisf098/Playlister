@@ -539,7 +539,6 @@ function GlobalStoreContextProvider(props) {
     };
 
     store.setPlayingSong = function (song, index) {
-        console.log(song);
         storeReducer({
             type: GlobalStoreActionType.SET_PLAYING_SONG,
             payload: { playingSong: song, playingSongIndex: index }
@@ -710,6 +709,25 @@ function GlobalStoreContextProvider(props) {
             payload: null,
         });
     };
+
+    store.addComment = function (text) {
+        async function asyncUpdate() {
+            let playlist = store.playingPlaylist;
+            playlist.comments.push({userName: "louis", text: text});
+            console.log(playlist);
+            const response = await api.updatePlaylistById(
+                playlist._id,
+                playlist
+            );
+            if (response.data.success) {
+                storeReducer({
+                    type: GlobalStoreActionType.SET_PLAYING_PLAYLIST,
+                    payload: playlist,
+                });
+            }
+        }
+        asyncUpdate();
+    }
 
     return (
         <GlobalStoreContext.Provider

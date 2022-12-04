@@ -63,7 +63,16 @@ function UserPlayerArea() {
         }
     }
 
-    let comments = "yay";
+    let textFieldVisible = {
+        display: true
+    }
+    if (store.playingPlaylist === null) {
+        textFieldVisible = {
+            display: 'none'
+        }
+    }
+
+    let comments = "";
     if (store.playingPlaylist !== null && store.playingPlaylist.comments !== []) {
     comments =
         <Box sx={{maxHeight: '58vh', overflow: 'auto'}}>
@@ -169,6 +178,7 @@ function UserPlayerArea() {
                         onChange={(ev) => {
                             setText(ev.target.value);
                         }}
+                        sx={textFieldVisible}
                     />
                 </Box>
             </TabPanel>

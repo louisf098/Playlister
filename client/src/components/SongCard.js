@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 function SongCard(props) {
     const { store } = useContext(GlobalStoreContext);
     const [ draggedTo, setDraggedTo ] = useState(0);
-    const { song, index } = props;
+    const { song, index, isPublished } = props;
 
     function handleDragStart(event) {
         event.dataTransfer.setData("song", index);
@@ -52,6 +52,17 @@ function SongCard(props) {
         }
     }
 
+    let removeSongButton = "";
+    if (!isPublished) {
+        removeSongButton =
+            <IconButton onClick={(event) => {handleRemoveSong(event)}} sx={{float: "right", zIndex: '6'}}>
+                <ClearIcon sx={{size: "medium", color: "grey"}}></ClearIcon>
+            </IconButton>
+    }
+    else {
+        removeSongButton = <Box></Box>
+    }
+
     let cardClass = "list-card unselected-list-card";
     return (
         <div
@@ -74,9 +85,7 @@ function SongCard(props) {
                 {song.title} by {song.artist}
         
             </Box>
-            <IconButton onClick={(event) => {handleRemoveSong(event)}} sx={{float: "right", zIndex: '6'}}>
-                <ClearIcon sx={{size: "medium", color: "grey"}}></ClearIcon>
-            </IconButton>
+            {removeSongButton}
         </div>
     );
 }

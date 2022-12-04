@@ -32,6 +32,16 @@ function ListCard(props) {
     const [expanded, setExpanded] = useState(false);
     const [clicked, setClicked] = useState(false);
 
+    // gets corresponding playlist object
+    let playlist = null;
+    useEffect(() => {
+        store.setAllPlaylists();
+    }, []);
+    playlist = store.allPlaylists.filter(function (list) {
+        return list._id === idNamePair._id;
+    });
+    playlist = playlist[0];
+
     function handleLoadList(event, id) {
         console.log("handleLoadList for " + id);
         if (!event.target.disabled) {
@@ -146,60 +156,6 @@ function ListCard(props) {
             ></KeyboardDoubleArrowUpIcon>
         );
     }
-    let songBox = "";
-
-    if (
-        store.currentList !== null &&
-        idNamePair.name === store.currentList.name
-    ) {
-        songBox = (
-            <Box sx={{ maxWidth: "32vw", width: "100%" }}>
-                <List sx={{ alignItems: "center" }}>
-                    {store.currentList.songs.map((song, index) => (
-                        <ListItem sx={{ maxWidth: "32vw", width: "100%" }}>
-                            <SongCard
-                                id={"playlist-song-" + index}
-                                key={"playlist-song-" + index}
-                                index={index}
-                                song={song}
-                            />
-                        </ListItem>
-                    ))}
-                    <ListItem
-                        sx={{
-                            justifyContent: "center",
-                        }}
-                    >
-                        <Button
-                            variant="contained"
-                            sx={{
-                                width: "100%",
-                                fontSize: "18pt",
-                                padding: "10px",
-                                borderRadius: "25px",
-                                bgcolor: "#ede7f6",
-                                color: "black",
-                                "&.MuiButton-contained": {
-                                    backgroundColor: "ede7f6",
-                                },
-                                "&:hover": {
-                                    backgroundColor: "#111111",
-                                    color: "white",
-                                },
-                            }}
-                            onClick={(event) => {
-                                handleAddNewSong(event)
-                            }}
-                        >
-                            +
-                        </Button>
-                    </ListItem>
-                </List>
-            </Box>
-        );
-    } else {
-        songBox = <Box></Box>;
-    }
 
     let workspaceButtons = "";
     let workspaceButtonStyles = {
@@ -209,33 +165,75 @@ function ListCard(props) {
         fontSize: "10px",
         margin: "1px",
     };
+
+    let addSongButton = "";
+    let undoRedoButtons = "";
+    let publishButton = "";
+    if (playlist !== undefined && !playlist.isPublished) {
+        addSongButton =
+            <Button
+                variant="contained"
+                sx={{
+                    width: "100%",
+                    fontSize: "18pt",
+                    padding: "10px",
+                    borderRadius: "25px",
+                    bgcolor: "#ede7f6",
+                    color: "black",
+                    "&.MuiButton-contained": {
+                        backgroundColor: "ede7f6",
+                    },
+                    "&:hover": {
+                        backgroundColor: "#111111",
+                        color: "white",
+                    },
+                }}
+                onClick={(event) => {
+                    handleAddNewSong(event)
+                }}
+            >
+                +
+            </Button>
+
+        undoRedoButtons =
+            <Box>
+                <Button
+                    onClick={(event) => {
+                        handleUndo(event)
+                    }}
+                    variant="contained"
+                    sx={workspaceButtonStyles}
+                >
+                    Undo
+                </Button>
+                <Button
+                    onClick={(event) => {
+                        handleRedo(event)
+                    }}
+                    variant="contained"
+                    sx={workspaceButtonStyles}
+                >
+                    Redo
+                </Button>
+            </Box>
+
+        publishButton =
+        <Button onClick={(event) => {handlePublish(event, idNamePair._id)}} variant="contained" sx={workspaceButtonStyles}>
+            Publish
+        </Button>
+    }
+    else {
+        addSongButton = <Box></Box>
+        undoRedoButtons = <Box></Box>
+        publishButton = <Box></Box>
+    }
+
     if (expanded) {
         workspaceButtons = (
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                {undoRedoButtons}
                 <Box>
-                    <Button
-                        onClick={(event) => {
-                            handleUndo(event)
-                        }}
-                        variant="contained"
-                        sx={workspaceButtonStyles}
-                    >
-                        Undo
-                    </Button>
-                    <Button
-                        onClick={(event) => {
-                            handleRedo(event)
-                        }}
-                        variant="contained"
-                        sx={workspaceButtonStyles}
-                    >
-                        Redo
-                    </Button>
-                </Box>
-                <Box>
-                    <Button onClick={(event) => {handlePublish(event, idNamePair._id)}} variant="contained" sx={workspaceButtonStyles}>
-                        Publish
-                    </Button>
+                    {publishButton}
                     <Button
                         onClick={(event) => {
                             handleDeleteList(event, idNamePair._id);
@@ -254,16 +252,40 @@ function ListCard(props) {
     } else {
         workspaceButtons = <Box></Box>;
     }
+    
+    let songBox = "";
 
-    // gets corresponding playlist object
-    let playlist = null;
-    useEffect(() => {
-        store.setAllPlaylists();
-    }, []);
-    playlist = store.allPlaylists.filter(function (list) {
-        return list._id === idNamePair._id;
-    });
-    playlist = playlist[0];
+    if (
+        store.currentList !== null &&
+        idNamePair.name === store.currentList.name
+    ) {
+        songBox = (
+            <Box sx={{ maxWidth: "32vw", width: "100%" }}>
+                <List sx={{ alignItems: "center" }}>
+                    {store.currentList.songs.map((song, index) => (
+                        <ListItem sx={{ maxWidth: "32vw", width: "100%" }}>
+                            <SongCard
+                                id={"playlist-song-" + index}
+                                key={"playlist-song-" + index}
+                                index={index}
+                                song={song}
+                                isPublished={playlist.isPublished}
+                            />
+                        </ListItem>
+                    ))}
+                    <ListItem
+                        sx={{
+                            justifyContent: "center",
+                        }}
+                    >
+                        {addSongButton}
+                    </ListItem>
+                </List>
+            </Box>
+        );
+    } else {
+        songBox = <Box></Box>;
+    }
     
     let publishedBy = "";
     if (playlist !== undefined) {

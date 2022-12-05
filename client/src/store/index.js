@@ -35,7 +35,8 @@ export const GlobalStoreActionType = {
     SET_PLAYING_PLAYLIST: "SET_PLAYING_PLAYLIST",
     SET_PLAYING_SONG: "SET_PLAYING_SONG",  
     INCREMENT_PUBLISH_COUNT: "INCREMENT_PUBLISH_COUNT",
-    SET_CURRENT_SCREEN: "SET_CURRENT_SCREEN"
+    SET_CURRENT_SCREEN: "SET_CURRENT_SCREEN",
+    SET_CURRENTLY_SEARCHING: "SET_CURRENTLY_SEARCHING"
 };
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -75,6 +76,7 @@ function GlobalStoreContextProvider(props) {
         playingSongIndex: -1,
         publishCounter: -1,
         currentScreen: CurrentScreen.NONE,
+        currentlySearching: "",
     });
     const history = useHistory();
 
@@ -107,6 +109,7 @@ function GlobalStoreContextProvider(props) {
                     playingSongIndex: store.playingSongIndex,
                     publishCounter: store.publishCounter,
                     currentScreen: store.currentScreen,
+                    currentlySearching: store.currentlySearching
                 });
             }
             // STOP EDITING THE CURRENT LIST
@@ -127,6 +130,7 @@ function GlobalStoreContextProvider(props) {
                     playingSongIndex: store.playingSongIndex,
                     publishCounter: store.publishCounter,
                     currentScreen: store.currentScreen,
+                    currentlySearching: store.currentlySearching
                 });
             }
             // CREATE A NEW LIST
@@ -147,6 +151,7 @@ function GlobalStoreContextProvider(props) {
                     playingSongIndex: store.playingSongIndex,
                     publishCounter: store.publishCounter,
                     currentScreen: store.currentScreen,
+                    currentlySearching: store.currentlySearching
                 });
             }
             // GET ALL THE LISTS SO WE CAN PRESENT THEM
@@ -167,6 +172,7 @@ function GlobalStoreContextProvider(props) {
                     playingSongIndex: store.playingSongIndex,
                     publishCounter: store.publishCounter,
                     currentScreen: store.currentScreen,
+                    currentlySearching: store.currentlySearching
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -187,6 +193,7 @@ function GlobalStoreContextProvider(props) {
                     playingSongIndex: store.playingSongIndex,
                     publishCounter: store.publishCounter,
                     currentScreen: store.currentScreen,
+                    currentlySearching: store.currentlySearching
                 });
             }
             // UPDATE A LIST
@@ -207,6 +214,7 @@ function GlobalStoreContextProvider(props) {
                     playingSongIndex: store.playingSongIndex,
                     publishCounter: store.publishCounter,
                     currentScreen: store.currentScreen,
+                    currentlySearching: store.currentlySearching
                 });
             }
             // START EDITING A LIST NAME
@@ -227,6 +235,7 @@ function GlobalStoreContextProvider(props) {
                     playingSongIndex: store.playingSongIndex,
                     publishCounter: store.publishCounter,
                     currentScreen: store.currentScreen,
+                    currentlySearching: store.currentlySearching
                 });
             }
             //
@@ -247,6 +256,7 @@ function GlobalStoreContextProvider(props) {
                     playingSongIndex: store.playingSongIndex,
                     publishCounter: store.publishCounter,
                     currentScreen: store.currentScreen,
+                    currentlySearching: store.currentlySearching
                 });
             }
             case GlobalStoreActionType.REMOVE_SONG: {
@@ -266,6 +276,7 @@ function GlobalStoreContextProvider(props) {
                     playingSongIndex: store.playingSongIndex,
                     publishCounter: store.publishCounter,
                     currentScreen: store.currentScreen,
+                    currentlySearching: store.currentlySearching
                 });
             }
             case GlobalStoreActionType.HIDE_MODALS: {
@@ -285,6 +296,7 @@ function GlobalStoreContextProvider(props) {
                     playingSongIndex: store.playingSongIndex,
                     publishCounter: store.publishCounter,
                     currentScreen: store.currentScreen,
+                    currentlySearching: store.currentlySearching
                 });
             }
             case GlobalStoreActionType.SET_ALL_PLAYLISTS: {
@@ -304,6 +316,7 @@ function GlobalStoreContextProvider(props) {
                     playingSongIndex: store.playingSongIndex,
                     publishCounter: store.publishCounter,
                     currentScreen: store.currentScreen,
+                    currentlySearching: store.currentlySearching
                 });
             }
             case GlobalStoreActionType.SET_PLAYING_PLAYLIST: {
@@ -323,6 +336,7 @@ function GlobalStoreContextProvider(props) {
                     playingSongIndex: store.playingSongIndex,
                     publishCounter: store.publishCounter,
                     currentScreen: store.currentScreen,
+                    currentlySearching: store.currentlySearching
                 });
             }
             case GlobalStoreActionType.SET_PLAYING_SONG: {
@@ -342,6 +356,7 @@ function GlobalStoreContextProvider(props) {
                     playingSongIndex: payload.playingSongIndex,
                     publishCounter: store.publishCounter,
                     currentScreen: store.currentScreen,
+                    currentlySearching: store.currentlySearching
                 });
             }
             case GlobalStoreActionType.INCREMENT_PUBLISH_COUNT: {
@@ -361,6 +376,7 @@ function GlobalStoreContextProvider(props) {
                     playingSongIndex: store.playingSongIndex,
                     publishCounter: payload,
                     currentScreen: store.currentScreen,
+                    currentlySearching: store.currentlySearching
                 });
             }
             case GlobalStoreActionType.SET_CURRENT_SCREEN: {
@@ -380,6 +396,27 @@ function GlobalStoreContextProvider(props) {
                     playingSongIndex: store.playingSongIndex,
                     publishCounter: store.publishCounter,
                     currentScreen: payload,
+                    currentlySearching: store.currentlySearching
+                });
+            }
+            case GlobalStoreActionType.SET_CURRENTLY_SEARCHING: {
+                return setStore({
+                    currentModal: CurrentModal.NONE,
+                    idNamePairs: store.idNamePairs,
+                    currentList: store.currentList,
+                    currentSongIndex: -1,
+                    currentSong: null,
+                    newListCounter: store.newListCounter,
+                    listNameActive: false,
+                    listIdMarkedForDeletion: null,
+                    listMarkedForDeletion: null,
+                    allPlaylists: store.allPlaylists,
+                    playingPlaylist: store.playingPlaylist,
+                    playingSong: store.playingSong,
+                    playingSongIndex: store.playingSongIndex,
+                    publishCounter: store.publishCounter,
+                    currentScreen: store.currentScreen,
+                    currentlySearching: payload
                 });
             }
             default:
@@ -534,6 +571,11 @@ function GlobalStoreContextProvider(props) {
                     playlists = playlists.filter(function (playlist) {
                         return playlist.isPublished
                     })
+                    if (store.currentlySearching !== "") {
+                        playlists = playlists.filter(function (playlist) {
+                            return playlist.name.toLowerCase().includes(store.currentlySearching);
+                        })
+                    }
                     let pairs = [];
                     for (let key in playlists) {
                         let list = playlists[key];
@@ -910,6 +952,13 @@ function GlobalStoreContextProvider(props) {
         storeReducer({
             type: GlobalStoreActionType.SET_CURRENT_SCREEN,
             payload: screen,
+        });
+    }
+
+    store.setCurrentlySearching = function (text) {
+        storeReducer({
+            type: GlobalStoreActionType.SET_CURRENTLY_SEARCHING,
+            payload: text,
         });
     }
 

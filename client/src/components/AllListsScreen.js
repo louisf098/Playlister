@@ -25,6 +25,10 @@ const AllListsScreen = () => {
         store.loadIdNamePairs();
     }, [store.newListCounter]);
 
+    useEffect(() => {
+        store.loadIdNamePairs();
+    }, [store.currentlySearching])
+
     console.log(store.idNamePairs);
     console.log(store.allPlaylists);
 

@@ -72,6 +72,7 @@ function ListCard(props) {
     }
 
     function handlePlay(event, id) {
+        console.log(id);
         event.stopPropagation();
         if (store.playingPlaylist === null) {
             //load in

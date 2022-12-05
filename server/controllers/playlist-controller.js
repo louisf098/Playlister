@@ -95,14 +95,15 @@ getPlaylistById = async (req, res) => {
             await User.findOne({ email: list.ownerEmail }, (err, user) => {
                 console.log("user._id: " + user._id);
                 console.log("req.userId: " + req.userId);
-                if (user._id == req.userId) {
-                    console.log("correct user!");
-                    return res.status(200).json({ success: true, playlist: list })
-                }
-                else {
-                    console.log("incorrect user!");
-                    return res.status(400).json({ success: false, description: "authentication error" });
-                }
+                return res.status(200).json({ success: true, playlist: list })
+                // if (user._id == req.userId) {
+                //     console.log("correct user!");
+                //     return res.status(200).json({ success: true, playlist: list })
+                // }
+                // else {
+                //     console.log("incorrect user!");
+                //     return res.status(400).json({ success: false, description: "authentication error" });
+                // }
             });
         }
         asyncFindUser(list);
@@ -183,7 +184,7 @@ updatePlaylist = async (req, res) => {
             await User.findOne({ email: list.ownerEmail }, (err, user) => {
                 console.log("user._id: " + user._id);
                 console.log("req.userId: " + req.userId);
-                if (user._id == req.userId) {
+                // if (user._id == req.userId) {
                     console.log("correct user!");
                     console.log("req.body.name: " + req.body.name);
 
@@ -214,11 +215,11 @@ updatePlaylist = async (req, res) => {
                                 message: 'Playlist not updated!',
                             })
                         })
-                }
-                else {
-                    console.log("incorrect user!");
-                    return res.status(400).json({ success: false, description: "authentication error" });
-                }
+                // }
+                // else {
+                //     console.log("incorrect user!");
+                //     return res.status(400).json({ success: false, description: "authentication error" });
+                // }
             });
         }
         asyncFindUser(playlist);

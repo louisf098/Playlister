@@ -644,6 +644,9 @@ function GlobalStoreContextProvider(props) {
                     payload: playlist,
                 });
             }
+            else {
+                console.log("FAILLL")
+            }
         }
         aysncSetPlayingList(id);
     };

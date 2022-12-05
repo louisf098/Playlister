@@ -244,20 +244,22 @@ function ListCard(props) {
     }
 
     let deleteButton = "";
-    if (auth.user.userName === playlist.userName) {
-        deleteButton =
-        <Button
-            onClick={(event) => {
-                handleDeleteList(event, idNamePair._id);
-            }}
-            variant="contained"
-            sx={workspaceButtonStyles}
-        >
-            Delete
-        </Button>
-    }
-    else {
-        deleteButton = <Box></Box>
+    if (playlist) {
+        if (auth.user.userName === playlist.userName) {
+            deleteButton =
+            <Button
+                onClick={(event) => {
+                    handleDeleteList(event, idNamePair._id);
+                }}
+                variant="contained"
+                sx={workspaceButtonStyles}
+            >
+                Delete
+            </Button>
+        }
+        else {
+            deleteButton = <Box></Box>
+        }
     }
 
     if (expanded) {
@@ -422,6 +424,10 @@ function ListCard(props) {
             </Box>
         </ListItem>
     );
+
+    if (store.currentlySearching !== "" && !idNamePair.name.toLowerCase().includes(store.currentlySearching)) {
+        cardElement = <Box></Box>
+    }
 
     if (editActive) {
         cardElement = (

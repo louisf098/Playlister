@@ -27,6 +27,10 @@ const HomeScreen = () => {
         }
     }, [store.newListCounter]);
 
+    useEffect(() => {
+        store.loadIdNamePairs();
+    }, [store.currentlySearching])
+
     function handleCreateNewList() {
         store.createNewList();
     }

@@ -37,7 +37,7 @@ export default function AppBanner() {
 
     function handleKeyPress(event) {
         if (event.code === "Enter") {
-            store.setCurrentlySearching(text);
+            store.setCurrentlySearching(text.toLowerCase());
         }
     }
 

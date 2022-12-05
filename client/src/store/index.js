@@ -395,8 +395,8 @@ function GlobalStoreContextProvider(props) {
                     playingSong: store.playingSong,
                     playingSongIndex: store.playingSongIndex,
                     publishCounter: store.publishCounter,
-                    currentScreen: payload,
-                    currentlySearching: store.currentlySearching
+                    currentScreen: payload.screen,
+                    currentlySearching: payload.searching
                 });
             }
             case GlobalStoreActionType.SET_CURRENTLY_SEARCHING: {
@@ -555,6 +555,13 @@ function GlobalStoreContextProvider(props) {
                     let res = await api.getPlaylists();
                     if (res.data.success) {
                         let playlists = res.data.data;
+                        if (store.currentlySearching !== "") {
+                            console.log(store.currentlySearching)
+                            playlists = playlists.filter(function (playlist) {
+                                return playlist.name.toLowerCase().includes(store.currentlySearching);
+                            })
+                        }
+                        console.log(playlists);
                         storeReducer({
                             type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                             payload: {pairsArray: pairsArray, playlists: playlists},
@@ -951,7 +958,7 @@ function GlobalStoreContextProvider(props) {
     store.setCurrentScreen = function (screen) {
         storeReducer({
             type: GlobalStoreActionType.SET_CURRENT_SCREEN,
-            payload: screen,
+            payload: {screen: screen, searching: ""}
         });
     }
 

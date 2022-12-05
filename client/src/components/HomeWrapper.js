@@ -8,6 +8,7 @@ import SplashScreen from './SplashScreen'
 import AuthContext from '../auth'
 import { GlobalStoreContext } from "../store";
 import AllListsScreen from './AllListsScreen';
+import UserListsScreen from './UserListsScreen';
 
 export default function HomeWrapper() {
     const { auth } = useContext(AuthContext);
@@ -22,6 +23,9 @@ export default function HomeWrapper() {
         }
         else if (store.currentScreen === "ALL_LISTS") {
             setScreen(<AllListsScreen />)
+        }
+        else if (store.currentScreen === "USER_LISTS") {
+            setScreen(<UserListsScreen />)
         }
     }, [store.currentScreen])
     

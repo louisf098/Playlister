@@ -551,6 +551,30 @@ function GlobalStoreContextProvider(props) {
                     console.log("API FAILED TO GET THE LIST PAIRS");
                 }
             }
+            if (store.currentScreen === "USER_LISTS") {
+                const response = await api.getPlaylists();
+                if (response.data.success) {
+                    let playlists = response.data.data;
+                    playlists = playlists.filter(function (playlist) {
+                        return playlist.userName === auth.user.userName && playlist.isPublished
+                    })
+                    let pairs = [];
+                    for (let key in playlists) {
+                        let list = playlists[key];
+                        let pair = {
+                            _id: list._id,
+                            name: list.name
+                        };
+                        pairs.push(pair);
+                    }
+                    storeReducer({
+                        type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                        payload: {pairsArray: pairs, playlists: playlists},
+                    });
+                } else {
+                    console.log("API FAILED TO GET THE LIST PAIRS");
+                }
+            }
         }
         asyncLoadIdNamePairs();
     };

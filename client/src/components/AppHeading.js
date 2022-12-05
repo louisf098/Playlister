@@ -107,6 +107,10 @@ export default function AppBanner() {
         store.setCurrentScreen("HOME");
     }
 
+    const handleSetScreenUser = () => {
+        store.setCurrentScreen("USER_LISTS");
+    }
+
     let homeStyles = "";
     let groupStyles = "";
     let userStyles = "";
@@ -132,7 +136,7 @@ export default function AppBanner() {
                         <IconButton onClick={handleSetScreenAllLists} sx={groupStyles}>
                             <GroupsIcon sx={{fontSize: "22pt", color: "white"}}></GroupsIcon>
                         </IconButton>
-                        <IconButton sx={userStyles}>
+                        <IconButton onClick={handleSetScreenUser} sx={userStyles}>
                             <PersonIcon sx={{fontSize: "22pt", color: "white"}}></PersonIcon>
                         </IconButton>
                     </Box>

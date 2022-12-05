@@ -269,7 +269,7 @@ function ListCard(props) {
 
     if (
         store.currentList !== null &&
-        idNamePair.name === store.currentList.name
+        idNamePair._id === store.currentList._id
     ) {
         songBox = (
             <Box sx={{ maxWidth: "32vw", width: "100%" }}>
@@ -311,13 +311,13 @@ function ListCard(props) {
 
     useEffect(() => {
         if (store.currentList !== null ) {
-            setExpanded(idNamePair.name === store.currentList.name);
+            setExpanded(idNamePair._id === store.currentList._id);
         }
     }, [store.currentList]);
 
     useEffect(() => {
         if (store.playingPlaylist !== null ) {
-            setClicked(idNamePair.name === store.playingPlaylist.name);
+            setClicked(idNamePair._id === store.playingPlaylist._id);
         }
     }, [store.playingPlaylist]);
 

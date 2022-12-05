@@ -28,7 +28,27 @@ export default function AppBanner() {
     const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext);
     const [anchorEl, setAnchorEl] = useState(null);
+    const [text, setText] = useState("");
     const isMenuOpen = Boolean(anchorEl);
+
+    function handleUpdateText(event) {
+        console.log(event.target.value);
+    }
+
+    function handleKeyPress(event) {
+        if (event.code === "Enter") {
+            setText(event.target.value);
+            
+        }
+    }
+    const styles = theme => ({
+        '& .MuiInputBase-input': {
+          padding: theme.spacing(1, 1, 1, 0),
+          // vertical padding + font size from searchIcon
+          paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+          width: '600px',
+        },
+    });
 
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
@@ -142,15 +162,12 @@ export default function AppBanner() {
                     </Box>
 
                     <Box sx={{ml: "auto", mr: "auto", width: 'auto'}}>
-                        <Search>
-                            <SearchIconWrapper>
-                            <SearchIcon />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                            />
-                        </Search>
+                        <TextField
+                            onKeyPress={handleKeyPress}
+                            onChange={handleUpdateText}
+                            sx={{width: '38vw', ml: '4vw', bgcolor: 'white'}}
+                            placeholder={"Search"}
+                        />
                     </Box>
 
                     <Box sx={{display: 'flex', ml: "auto"}}>

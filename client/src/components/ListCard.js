@@ -135,6 +135,18 @@ function ListCard(props) {
         event.stopPropagation();
         store.publishPlaylist(id);
     }
+    function handleChangeListName(event) {
+        event.stopPropagation();
+        if (!playlist.isPublished) {
+            if (event.detail === 2) {
+                toggleEdit();
+            }
+        }
+    }
+
+    function handleEventStopPropagation(event) {
+        event.stopPropagation();
+    }
 
     let selectClass = "unselected-list-card";
     if (selected) {
@@ -340,7 +352,6 @@ function ListCard(props) {
             <Box sx={{ display: "flex" }}>
                 <Box>
                     <IconButton
-                        onClick={handleToggleEdit}
                         aria-label="edit"
                     >
                         <ThumbUpOffAltIcon style={{ fontSize: "22pt" }} />
@@ -381,7 +392,7 @@ function ListCard(props) {
                     flexDirection: 'row',
                 }}
             >
-                <Box sx={{ fontSize: '80%' }}>{idNamePair.name}</Box>
+                <Box sx={{ fontSize: '80%' }} onClick={handleChangeListName}>{idNamePair.name}</Box>
                 {likeAndDislike}
             </Box>
 
@@ -414,24 +425,73 @@ function ListCard(props) {
 
     if (editActive) {
         cardElement = (
-            <TextField
-                margin="normal"
-                required
-                fullWidth
-                id={"list-" + idNamePair._id}
-                label="Playlist Name"
-                name="name"
-                autoComplete="Playlist Name"
-                className="list-card"
-                onKeyPress={handleKeyPress}
-                onChange={handleUpdateText}
-                defaultValue={idNamePair.name}
-                inputProps={{ style: { fontSize: 48 } }}
-                InputLabelProps={{ style: { fontSize: 24 } }}
-                autoFocus
-            />
+            <ListItem
+            id={idNamePair._id}
+            key={idNamePair._id}
+            sx={listCardStyles}
+            onClick={(event) => {
+                handlePlay(event, idNamePair._id);
+            }}
+        >
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width: '100%',
+                    maxWidth: '100%',
+                    flexDirection: 'row',
+                }}
+            >
+                <Box sx={{ fontSize: '80%' }}>
+                    <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id={"list-" + idNamePair._id}
+                    label="Playlist Name"
+                    name="name"
+                    autoComplete="Playlist Name"
+                    className="list-card"
+                    onKeyPress={handleKeyPress}
+                    onChange={handleUpdateText}
+                    onClick={handleEventStopPropagation}
+                    defaultValue={idNamePair.name}
+                    inputProps={{ style: { fontSize: 22 } }}
+                    InputLabelProps={{ style: { fontSize: 17 } }}
+                    autoFocus
+                />
+                </Box>
+                {likeAndDislike}
+            </Box>
+
+            {songBox}
+
+            {workspaceButtons}
+
+            <Box sx={{ display: "flex" }}>
+                <Typography>By: {publishedBy}</Typography>
+            </Box>
+
+            <Box
+                sx={{
+                    display: "flex",
+                    width: "32vw",
+                    justifyContent: "space-between",
+                }}
+            >
+                {publishedAndListens}
+                <IconButton
+                    onClick={(event) => {
+                        handleSelect(event, idNamePair._id);
+                    }}
+                >
+                    {expandButton}
+                </IconButton>
+            </Box>
+        </ListItem>
         );
     }
+    
     return cardElement;
 }
 

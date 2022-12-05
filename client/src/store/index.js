@@ -417,6 +417,16 @@ function GlobalStoreContextProvider(props) {
             if (response.data.success) {
                 let playlist = response.data.playlist;
                 playlist.name = newName;
+                const res = await api.getPlaylists();
+                if (res.data.success) {
+                    let playlists = res.data.data;
+                    playlists = playlists.filter(function (play) {
+                        return play.userName === auth.user.userName
+                    })
+                    while (playlists.some(p => p.name === playlist.name)) {
+                        playlist.name += "*";
+                    }
+                }
                 async function updateList(playlist) {
                     response = await api.updatePlaylistById(
                         playlist._id,

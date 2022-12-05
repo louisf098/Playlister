@@ -424,9 +424,10 @@ function ListCard(props) {
             </Box>
         </ListItem>
     );
-
-    if (store.currentlySearching !== "" && !idNamePair.name.toLowerCase().includes(store.currentlySearching)) {
-        cardElement = <Box></Box>
+    if (store.currentScreen === "NONE" || store.currentScreen === "HOME" || store.currentScreen === "ALL_LISTS") {
+        if (store.currentlySearching !== "" && !idNamePair.name.toLowerCase().includes(store.currentlySearching)) {
+            cardElement = <Box></Box>
+        }
     }
 
     if (editActive) {

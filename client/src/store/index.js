@@ -605,8 +605,9 @@ function GlobalStoreContextProvider(props) {
                 if (response.data.success) {
                     let playlists = response.data.data;
                     playlists = playlists.filter(function (playlist) {
-                        return playlist.userName === auth.user.userName && playlist.isPublished
+                        return playlist.userName.toLowerCase().includes(store.currentlySearching) && playlist.isPublished;
                     })
+                    console.log(playlists);
                     let pairs = [];
                     for (let key in playlists) {
                         let list = playlists[key];

@@ -25,8 +25,9 @@ const UserListsScreen = () => {
         store.loadIdNamePairs();
     }, [store.newListCounter]);
 
-    console.log(store.idNamePairs);
-    console.log(store.allPlaylists);
+    useEffect(() => {
+        store.loadIdNamePairs();
+    }, [store.currentlySearching])
 
     let listCard = "";
     if (store) {

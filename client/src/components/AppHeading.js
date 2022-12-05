@@ -107,19 +107,32 @@ export default function AppBanner() {
         store.setCurrentScreen("HOME");
     }
 
+    let homeStyles = "";
+    let groupStyles = "";
+    let userStyles = "";
+    if (store.currentScreen === "HOME" || store.currentScreen === "NONE") {
+        homeStyles = {border: '2px solid black'}
+    }
+    if (store.currentScreen === "ALL_LISTS") {
+        groupStyles = {border: '2px solid black'}
+    }
+    if (store.currentScreen === "USER_LISTS") {
+        userStyles = {border: '2px solid black'}
+    }
+
 
     return (
        <Box>
             <AppBar position="static" sx={{bgcolor: "#3f51b5"}}>
                 <Toolbar>
                     <Box>
-                        <IconButton onClick={handleSetScreenHome}>
+                        <IconButton onClick={handleSetScreenHome} sx={homeStyles}>
                             <HomeIcon sx={{fontSize: "22pt", color: "white"}}></HomeIcon>
                         </IconButton>
-                        <IconButton onClick={handleSetScreenAllLists}>
+                        <IconButton onClick={handleSetScreenAllLists} sx={groupStyles}>
                             <GroupsIcon sx={{fontSize: "22pt", color: "white"}}></GroupsIcon>
                         </IconButton>
-                        <IconButton>
+                        <IconButton sx={userStyles}>
                             <PersonIcon sx={{fontSize: "22pt", color: "white"}}></PersonIcon>
                         </IconButton>
                     </Box>

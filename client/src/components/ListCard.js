@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { GlobalStoreContext } from "../store";
+import AuthContext from "../auth";
 import SongCard from "./SongCard";
 
 import Box from "@mui/material/Box";
@@ -26,6 +27,7 @@ import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp
 */
 function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
+    const { auth } = useContext(AuthContext);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
     const { idNamePair, selected } = props;
@@ -229,21 +231,30 @@ function ListCard(props) {
         publishButton = <Box></Box>
     }
 
+    let deleteButton = "";
+    if (auth.user.userName === playlist.userName) {
+        deleteButton =
+        <Button
+            onClick={(event) => {
+                handleDeleteList(event, idNamePair._id);
+            }}
+            variant="contained"
+            sx={workspaceButtonStyles}
+        >
+            Delete
+        </Button>
+    }
+    else {
+        deleteButton = <Box></Box>
+    }
+
     if (expanded) {
         workspaceButtons = (
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 {undoRedoButtons}
                 <Box>
                     {publishButton}
-                    <Button
-                        onClick={(event) => {
-                            handleDeleteList(event, idNamePair._id);
-                        }}
-                        variant="contained"
-                        sx={workspaceButtonStyles}
-                    >
-                        Delete
-                    </Button>
+                    {deleteButton}
                     <Button variant="contained" sx={workspaceButtonStyles}>
                         Duplicate
                     </Button>

@@ -41,7 +41,30 @@ function Statusbar() {
                     <Typography variant="h2">Your Lists</Typography>
                     
             </div>
-        
+        if (store.currentScreen === "ALL_LISTS") {
+            statusBar =
+                <div id="playlister-statusbar">
+                    <Typography variant="h2">All Lists</Typography>    
+                </div>
+            if (store.currentlySearching !== "") {
+                statusBar =
+                    <div id="playlister-statusbar">
+                        <Typography variant="h2">{store.currentlySearching} Lists</Typography>    
+                    </div>
+            }
+        }
+        else if (store.currentScreen === "USER_LISTS") {
+            statusBar =
+                <div id="playlister-statusbar">
+                    <Typography variant="h2">User Lists</Typography>    
+                </div>
+            if (store.currentlySearching !== "") {
+                statusBar =
+                    <div id="playlister-statusbar">
+                        <Typography variant="h2">{store.currentlySearching} Lists</Typography>    
+                    </div>
+            }
+        }
     }
     else {
         statusBar = <Box></Box>

@@ -462,6 +462,16 @@ function GlobalStoreContextProvider(props) {
     // THIS FUNCTION CREATES A NEW LIST
     store.createNewList = async function () {
         let newListName = "Untitled" + store.newListCounter;
+        const res = await api.getPlaylists();
+        if (res.data.success) {
+            let playlists = res.data.data;
+            playlists = playlists.filter(function (play) {
+                return play.userName === auth.user.userName
+            })
+            while (playlists.some(p => p.name === newListName)) {
+                newListName += "*"
+            }
+        }
         const response = await api.createPlaylist(
             newListName,
             [],
@@ -826,7 +836,7 @@ function GlobalStoreContextProvider(props) {
     store.addComment = function (text) {
         async function asyncUpdate() {
             let playlist = store.playingPlaylist;
-            playlist.comments.push({userName: "louis", text: text});
+            playlist.comments.push({userName: auth.user.userName, text: text});
             console.log(playlist);
             const response = await api.updatePlaylistById(
                 playlist._id,

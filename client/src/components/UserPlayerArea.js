@@ -170,10 +170,10 @@ function UserPlayerArea() {
                         onKeyPress={(ev) => {
                             console.log(`Pressed keyCode ${ev.key}`);
                             if (ev.key === 'Enter') {
-                              handleEnter();
-                              ev.preventDefault();
+                                handleEnter();
+                                ev.preventDefault();
                             }
-                          }}
+                            }}
                         value={text}
                         onChange={(ev) => {
                             setText(ev.target.value);

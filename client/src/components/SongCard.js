@@ -13,7 +13,9 @@ function SongCard(props) {
     const { song, index, isPublished } = props;
 
     function handleDragStart(event) {
-        event.dataTransfer.setData("song", index);
+        if (!isPublished) {
+            event.dataTransfer.setData("song", index);
+        }
     }
 
     function handleDragOver(event) {
@@ -22,23 +24,29 @@ function SongCard(props) {
 
     function handleDragEnter(event) {
         event.preventDefault();
-        setDraggedTo(true);
+        if (!isPublished) {
+            setDraggedTo(true);
+        }
     }
 
     function handleDragLeave(event) {
         event.preventDefault();
-        setDraggedTo(false);
+        if (!isPublished) {   
+            setDraggedTo(false);
+        }
     }
 
     function handleDrop(event) {
         event.preventDefault();
-        let targetIndex = index;
-        let sourceIndex = Number(event.dataTransfer.getData("song"));
-        setDraggedTo(false);
+        if (!isPublished) {
+            let targetIndex = index;
+            let sourceIndex = Number(event.dataTransfer.getData("song"));
+            setDraggedTo(false);
+            // UPDATE THE LIST
+            if (targetIndex !== sourceIndex)
+                store.addMoveSongTransaction(sourceIndex, targetIndex);
+        }
 
-        // UPDATE THE LIST
-        if (targetIndex !== sourceIndex)
-            store.addMoveSongTransaction(sourceIndex, targetIndex);
     }
     function handleRemoveSong(event) {
         event.stopPropagation();
@@ -47,10 +55,13 @@ function SongCard(props) {
     function handleClick(event) {
         // DOUBLE CLICK IS FOR SONG EDITING
         event.stopPropagation();
-        if (event.detail === 2) {
+        if (event.detail === 2 && !isPublished) {
             store.showEditSongModal(index, song);
         }
     }
+
+    let isDraggable = "true";
+    if (isPublished) isDraggable = "false";
 
     let removeSongButton = "";
     if (!isPublished) {
@@ -74,7 +85,7 @@ function SongCard(props) {
             onDragEnter={handleDragEnter}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
-            draggable="true"
+            draggable={isDraggable}
             onClick={(event) => {
                 handleClick(event);
             }}

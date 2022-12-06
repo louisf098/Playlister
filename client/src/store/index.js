@@ -768,6 +768,12 @@ function GlobalStoreContextProvider(props) {
                             })
                             break;
                         }
+                        case "DISLIKES": {
+                            playlists = playlists.sort(function(a,b) {
+                                return b.dislikesCount.length - a.dislikesCount.length;
+                            })
+                            break;
+                        }
                         
                     }
                     let pairs = [];

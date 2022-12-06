@@ -774,7 +774,9 @@ function GlobalStoreContextProvider(props) {
                             })
                             break;
                         }
-                        
+                        default:  {
+                            //nothing
+                        }
                     }
                     let pairs = [];
                     for (let key in playlists) {
@@ -801,11 +803,31 @@ function GlobalStoreContextProvider(props) {
                         return playlist.userName.toLowerCase().includes(store.currentlySearching) && playlist.isPublished;
                     })
                     switch (store.sortType) {
-                        case "NONE": {
-                            //nothing
-                        }
                         case "NAME": {
                             playlists = playlists.sort((a, b) => a.name.localeCompare(b.name));
+                            break;
+                        }
+                        case "PUBLISH_DATE": {
+                            playlists = playlists.sort(function(a,b){
+                                return b.publishedAt - a.publishedAt;
+                            });
+                            playlists = playlists.reverse();
+                            break;
+                        }
+                        case "LIKES": {
+                            playlists = playlists.sort(function(a,b) {
+                                return b.likesCount.length - a.likesCount.length;
+                            })
+                            break;
+                        }
+                        case "DISLIKES": {
+                            playlists = playlists.sort(function(a,b) {
+                                return b.dislikesCount.length - a.dislikesCount.length;
+                            })
+                            break;
+                        }
+                        default:  {
+                            //nothing
                         }
                     }
                     let pairs = [];

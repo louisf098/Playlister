@@ -756,11 +756,16 @@ function GlobalStoreContextProvider(props) {
                             break;
                         }
                         case "PUBLISH_DATE": {
-                            console.log("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
                             playlists = playlists.sort(function(a,b){
                                 return b.publishedAt - a.publishedAt;
                             });
                             playlists = playlists.reverse();
+                            break;
+                        }
+                        case "LIKES": {
+                            playlists = playlists.sort(function(a,b) {
+                                return b.likesCount.length - a.likesCount.length;
+                            })
                             break;
                         }
                         

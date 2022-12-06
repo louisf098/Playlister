@@ -794,6 +794,12 @@ function GlobalStoreContextProvider(props) {
                             })
                             break;
                         }
+                        case "LISTENS": {
+                            playlists = playlists.sort(function(a,b) {
+                                return b.listens - a.listens;
+                            })
+                            break;
+                        }
                         default:  {
                             //nothing
                         }
@@ -843,6 +849,12 @@ function GlobalStoreContextProvider(props) {
                         case "DISLIKES": {
                             playlists = playlists.sort(function(a,b) {
                                 return b.dislikesCount.length - a.dislikesCount.length;
+                            })
+                            break;
+                        }
+                        case "LISTENS": {
+                            playlists = playlists.sort(function(a,b) {
+                                return b.listens - a.listens;
                             })
                             break;
                         }

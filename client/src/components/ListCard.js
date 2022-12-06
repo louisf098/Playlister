@@ -107,9 +107,9 @@ function ListCard(props) {
 
     function toggleEdit() {
         let newActive = !editActive;
-        if (newActive) {
-            store.setIsListNameEditActive();
-        }
+        // if (newActive) {
+        //     store.setIsListNameEditActive();
+        // }
         setEditActive(newActive);
     }
 
@@ -173,10 +173,10 @@ function ListCard(props) {
     if (selected) {
         selectClass = "selected-list-card";
     }
-    let cardStatus = false;
-    if (store.isListNameEditActive) {
-        cardStatus = true;
-    }
+    // let cardStatus = false;
+    // if (store.isListNameEditActive) {
+    //     cardStatus = true;
+    // }
 
     let expandButton = "";
     if (expanded === false) {

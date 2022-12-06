@@ -632,7 +632,7 @@ function GlobalStoreContextProvider(props) {
                                     type: GlobalStoreActionType.CHANGE_LIST_NAME,
                                     payload: {
                                         idNamePairs: pairsArray,
-                                        playlist: null,
+                                        playlist: store.currentList,
                                     },
                                 });
                             }

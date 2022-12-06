@@ -378,6 +378,12 @@ function ListCard(props) {
         }
     }, [store.dislikeCount])
 
+    useEffect(() => {
+        if (store.sortType !== "NONE") {
+            store.loadIdNamePairs();
+        }
+    }, [store.sortType])
+
     let likeSection = "";
     let dislikeSection = "";
     if (playlist !== undefined && playlist.isPublished) {

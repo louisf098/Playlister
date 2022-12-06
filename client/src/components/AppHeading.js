@@ -68,7 +68,7 @@ export default function AppBanner() {
     };
 
     const handleSortByName = () => {
-        store.sortByName();
+        store.setSortType("NAME");
         handleMenuClose();
     }
 
@@ -82,6 +82,26 @@ export default function AppBanner() {
 
     const handleSetScreenUser = () => {
         store.setCurrentScreen("USER_LISTS");
+    }
+
+    let menuItems = "";
+    if (store.currentScreen === "NONE" || store.currentScreen === "HOME") {
+        menuItems =
+        <Box>
+            <MenuItem onClick={handleMenuClose}>Creation Date (Old - New)</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Last Edit Date (New - Old)</MenuItem>
+            <MenuItem onClick={handleSortByName}>Name (A-Z)</MenuItem>
+        </Box>
+    }
+    else {
+        menuItems =
+        <Box>
+            <MenuItem onClick={handleSortByName}>Name (A-Z)</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Publish Date (Newest)</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Listens (High - Low)</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Likes (High - Low)</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Dislikes (High - Low)</MenuItem>
+        </Box>
     }
 
     let homeStyles = "";
@@ -143,12 +163,9 @@ export default function AppBanner() {
                         vertical: 'top',
                         horizontal: 'left',
                         }}
-                    >
-                        <MenuItem onClick={handleSortByName}>Name (A-Z)</MenuItem>
-                        <MenuItem onClick={handleMenuClose}>Publish Date (Newest)</MenuItem>
-                        <MenuItem onClick={handleMenuClose}>Listens (High - Low)</MenuItem>
-                        <MenuItem onClick={handleMenuClose}>Likes (High - Low)</MenuItem>
-                        <MenuItem onClick={handleMenuClose}>Dislikes (High - Low)</MenuItem>
+                    >   
+                        {menuItems}
+
                     </Menu>
                 </Toolbar>
             </AppBar> 

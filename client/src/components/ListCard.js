@@ -288,6 +288,19 @@ function ListCard(props) {
         }
     }
 
+    let duplicateButton = "";
+    if (auth.loggedIn && auth.user.userName !== "PLSNOFINDGUEST") {
+        duplicateButton =
+            <Button onClick={(event) => {
+                handleDuplicate(event, idNamePair._id);
+            }} variant="contained" sx={workspaceButtonStyles}>
+                Duplicate
+            </Button>
+    }
+    else {
+        duplicateButton = <Box></Box>
+    }
+
     if (expanded) {
         workspaceButtons = (
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -295,11 +308,7 @@ function ListCard(props) {
                 <Box>
                     {publishButton}
                     {deleteButton}
-                    <Button onClick={(event) => {
-                        handleDuplicate(event, idNamePair._id);
-                    }} variant="contained" sx={workspaceButtonStyles}>
-                        Duplicate
-                    </Button>
+                    {duplicateButton}
                 </Box>
             </Box>
         );

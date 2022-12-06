@@ -71,6 +71,11 @@ function UserPlayerArea() {
             display: 'none'
         }
     }
+    if (auth.user.userName === "PLSNOFINDGUEST") {
+        textFieldVisible = {
+            display: 'none'
+        }
+    }
 
     let comments = "";
     if (store.playingPlaylist !== null && store.playingPlaylist.comments !== []) {

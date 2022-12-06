@@ -147,13 +147,19 @@ export default function AppBanner() {
         userStyles = {border: '2px solid black'}
     }
 
+    let guest = false;
+    if (auth.loggedIn && auth.user.userName === "PLSNOFINDGUEST") {
+        guest = true;
+        homeStyles = {opacity: '40%'}
+    }
+
 
     return (
        <Box>
             <AppBar position="static" sx={{bgcolor: "#3f51b5"}}>
                 <Toolbar>
                     <Box>
-                        <IconButton onClick={handleSetScreenHome} sx={homeStyles}>
+                        <IconButton onClick={handleSetScreenHome} sx={homeStyles} disabled={guest}>
                             <HomeIcon sx={{fontSize: "22pt", color: "white"}}></HomeIcon>
                         </IconButton>
                         <IconButton onClick={handleSetScreenAllLists} sx={groupStyles}>

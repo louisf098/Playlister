@@ -11,6 +11,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { fabClasses } from '@mui/material';
 
 export default function AppBanner() {
     const { auth } = useContext(AuthContext);
@@ -35,6 +36,11 @@ export default function AppBanner() {
     const handleClearTps = () => {
         store.clearTransactions();
     }
+
+    let exit = "Logout"
+    if (auth.loggedIn && auth.user.userName === "PLSNOFINDGUEST") {
+        exit = "Return to Splash Screen"
+    }    
 
     const menuId = 'primary-search-account-menu';
     const loggedOutMenu = (
@@ -73,7 +79,7 @@ export default function AppBanner() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            <MenuItem onClick={handleLogout}>{exit}</MenuItem>
         </Menu>        
 
     let menu = loggedOutMenu;
@@ -84,7 +90,7 @@ export default function AppBanner() {
     function getAccountMenu(loggedIn) {
         let userInitials = auth.getUserInitials();
         console.log("userInitials: " + userInitials);
-        if (loggedIn) 
+        if (loggedIn && auth.user.userName !== "PLSNOFINDGUEST") 
             return <div>{userInitials}</div>;
         else
             return <AccountCircle />;

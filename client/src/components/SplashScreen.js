@@ -1,12 +1,29 @@
+import { useContext } from "react";
+import AuthContext from "../auth";
+import { GlobalStoreContext } from "../store";
+
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 
 export default function SplashScreen() {
+    const { store } = useContext(GlobalStoreContext);
+    const { auth } = useContext(AuthContext);
 
-    function handleLogin() {
+    function handleLoginAsGuest() {
+        auth.registerUser(
+            "PLSNOFINDGUEST",
+            "PLSNOFINDGUEST",
+            "PLSNOFINDGUEST",
+            "PLSNOFINDGUEST1",
+            "PLSNOFINDGUEST1",
+            "PLSNOFINDGUEST",
+        );
+        
+        auth.loginUser("PLSNOFINDGUEST", "PLSNOFINDGUEST1");
 
+        store.setCurrentScreen("ALL_LISTS");
     }
     
     let buttonStyles = {
@@ -70,7 +87,7 @@ export default function SplashScreen() {
                         </Button>
                     </Grid>
                     <Grid item xs={4}>
-                        <Button variant="contained" sx={buttonStyles}>
+                        <Button variant="contained" sx={buttonStyles} onClick={handleLoginAsGuest}>
                             Login as Guest
                         </Button>
                     </Grid>

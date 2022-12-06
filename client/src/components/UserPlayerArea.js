@@ -66,7 +66,7 @@ function UserPlayerArea() {
     let textFieldVisible = {
         display: true
     }
-    if (store.playingPlaylist === null) {
+    if (store.playingPlaylist === null || !store.playingPlaylist.isPublished) {
         textFieldVisible = {
             display: 'none'
         }

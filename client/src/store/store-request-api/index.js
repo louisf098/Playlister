@@ -33,11 +33,6 @@ export const createPlaylist = (newListName, newSongs, userEmail, newComments, ne
         likesCount: newLikes,
         userInteractions: newUserInteractions,
         isPublished: newIsPublished,
-        // publishedAt: new Date().toLocaleDateString('en-us', {
-        //     year: 'numeric',
-        //     month: 'short',
-        //     day: 'numeric',
-        // }),
         publishedAt: new Date(0),
         userName: newUserName,
         listens: 0,

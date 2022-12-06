@@ -453,9 +453,19 @@ function ListCard(props) {
     let likeAndDislike = "";
     let publishedAndListens = "";
     if (playlist !== undefined && playlist.isPublished) {
+
+        let publishDate = "";
+        if (playlist!==undefined && playlist.isPublished) {
+            publishDate = new Date(playlist.publishedAt).toLocaleDateString('en-us', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+            })
+        }
+        
         publishedAndListens =
             <Box sx={{display: 'flex', flexGrow: 1, justifyContent: 'space-between', mr: '10px'}}>
-                <Typography sx={{ color: "#1b5e20" }}>Published: {playlist!==undefined && playlist.isPublished ? playlist.publishedAt : ""}</Typography>
+                <Typography sx={{ color: "#1b5e20" }}>Published: {playlist!==undefined && playlist.isPublished ? publishDate : ""}</Typography>
                 <Typography sx={{ color: "red" }}>Listens: {playlist!==undefined && playlist.isPublished ? playlist.listens : ""}</Typography>
             </Box>
 

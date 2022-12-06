@@ -82,6 +82,11 @@ export default function AppBanner() {
         handleMenuClose();
     }
 
+    const handleSortByPublishDate = () => {
+        store.setSortType("PUBLISH_DATE");
+        handleMenuClose();
+    }
+
     const handleSetScreenAllLists = () => {
         store.setCurrentScreen("ALL_LISTS");
     }
@@ -107,7 +112,7 @@ export default function AppBanner() {
         menuItems =
         <Box>
             <MenuItem onClick={handleSortByName}>Name (A-Z)</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Publish Date (Newest)</MenuItem>
+            <MenuItem onClick={handleSortByPublishDate}>Publish Date (Newest)</MenuItem>
             <MenuItem onClick={handleMenuClose}>Listens (High - Low)</MenuItem>
             <MenuItem onClick={handleMenuClose}>Likes (High - Low)</MenuItem>
             <MenuItem onClick={handleMenuClose}>Dislikes (High - Low)</MenuItem>

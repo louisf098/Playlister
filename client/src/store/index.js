@@ -687,21 +687,12 @@ function GlobalStoreContextProvider(props) {
                 if (response.data.success) {
                     let pairsArray = response.data.idNamePairs;
                     switch (store.sortType) {
-                        case "NONE": {
-                            //nothing
-                            break;
-                        }
                         case "NAME": {
                             pairsArray = pairsArray.sort((a, b) => a.name.localeCompare(b.name));
                             break;
                         }
-                        case "CREATION_DATE": {
-                            //original selection of pairs
-                            break;
-                        }
-                        case "LAST_EDIT_DATE": {
-                            //updated later
-                            break;
+                        default: {
+                            //nothing
                         }
                     }
                     let res = await api.getPlaylists();
@@ -715,17 +706,6 @@ function GlobalStoreContextProvider(props) {
                         }
                         
                         switch (store.sortType) {
-                            case "NONE": {
-                                //nothing
-                                break;
-                            }
-                            case "NAME": {
-                                // playlists = playlists.sort((a, b) => a.name.localeCompare(b.name));
-                                break;
-                            }
-                            case "CREATION_DATE": {
-                                break;
-                            }
                             case "LAST_EDIT_DATE": {
                                 let userPlaylists = playlists.filter(function(playlist) {
                                     return playlist.userName === auth.user.userName
@@ -742,6 +722,10 @@ function GlobalStoreContextProvider(props) {
                                     };
                                     pairsArray.push(pair);
                                 }
+                                break;
+                            }
+                            default: {
+                                //nothing
                             }
                         }
                         console.log(playlists);
@@ -767,12 +751,19 @@ function GlobalStoreContextProvider(props) {
                         })
                     }
                     switch (store.sortType) {
-                        case "NONE": {
-                            //nothing
-                        }
                         case "NAME": {
                             playlists = playlists.sort((a, b) => a.name.localeCompare(b.name));
+                            break;
                         }
+                        case "PUBLISH_DATE": {
+                            console.log("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
+                            playlists = playlists.sort(function(a,b){
+                                return b.publishedAt - a.publishedAt;
+                            });
+                            playlists = playlists.reverse();
+                            break;
+                        }
+                        
                     }
                     let pairs = [];
                     for (let key in playlists) {

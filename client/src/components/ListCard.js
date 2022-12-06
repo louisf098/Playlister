@@ -44,6 +44,17 @@ function ListCard(props) {
     });
     playlist = playlist[0];
 
+    let liked = false;
+    let disliked = false;
+    if (playlist !== undefined && playlist.userInteractions.length !== 0) {
+        if (playlist.likesCount.some((obj) => obj.userName === auth.user.userName)) {
+            liked = true;
+        }
+        if (playlist.dislikesCount.some((obj) => obj.userName === auth.user.userName)) {
+            disliked = true;
+        }
+    }
+
     function handleLoadList(event, id) {
         console.log("handleLoadList for " + id);
         if (!event.target.disabled) {
@@ -146,6 +157,16 @@ function ListCard(props) {
 
     function handleEventStopPropagation(event) {
         event.stopPropagation();
+    }
+
+    function handleLike(event, id) {
+        event.stopPropagation();
+        store.likePlaylist(id);
+    }
+
+    function handleDislike(event, id) {
+        event.stopPropagation();
+        store.dislikePlaylist(id);
     }
 
     let selectClass = "unselected-list-card";
@@ -337,9 +358,85 @@ function ListCard(props) {
 
     useEffect(() => {
         if (store.publishCounter !== -1) {
-            store.setAllPlaylists();
+            store.loadIdNamePairs();
         }
     }, [store.publishCounter])
+
+    useEffect(() => {
+        if (store.likeCount !== -1) {
+            liked = true;
+            disliked = false;
+            store.loadIdNamePairs();
+        }
+    }, [store.likeCount])
+
+    useEffect(() => {
+        if (store.dislikeCount !== -1) {
+            disliked = true;
+            liked = false;
+            store.loadIdNamePairs();
+        }
+    }, [store.dislikeCount])
+
+    let likeSection = "";
+    let dislikeSection = "";
+    if (playlist !== undefined && playlist.isPublished) {
+        likeSection =
+            <Box sx={{ display: "flex" }}>
+                <IconButton
+                    aria-label="edit"
+                    onClick={(event) => {
+                        handleLike(event, idNamePair._id)
+                    }}
+                >
+                    <ThumbUpOffAltIcon style={{ fontSize: "22pt" }} />
+                </IconButton>
+                <Typography sx={{mt: '10px'}}>{playlist.likesCount.length}</Typography>
+            </Box>
+        if (liked) {
+            likeSection =
+            <Box sx={{ display: "flex" }}>
+                <IconButton
+                    aria-label="edit"
+                    onClick={(event) => {
+                        handleLike(event, idNamePair._id)
+                    }}
+                    disabled={true}
+                >
+                    <ThumbUpIcon style={{ fontSize: "22pt" }} />
+                </IconButton>
+                <Typography sx={{mt: '10px'}}>{playlist.likesCount.length}</Typography>
+            </Box>
+        }
+        
+        dislikeSection =
+            <Box sx={{ display: "flex" }}>
+                <IconButton
+                    onClick={(event) => {
+                        handleDislike(event, idNamePair._id)
+                    }}
+                    aria-label="delete"
+                >
+                    <ThumbDownOffAltIcon style={{ fontSize: "22pt" }} />
+                </IconButton>
+                <Typography sx={{mt: '10px'}}>{playlist.dislikesCount.length}</Typography>
+            </Box>
+        if (disliked) {
+            dislikeSection =
+                <Box sx={{ display: "flex" }}>
+                    <IconButton
+                        onClick={(event) => {
+                            handleDislike(event, idNamePair._id)
+                        }}
+                        aria-label="delete"
+                        disabled={true}
+                    >
+                        <ThumbDownAltIcon style={{ fontSize: "22pt" }} />
+                    </IconButton>
+                    <Typography sx={{mt: '10px'}}>{playlist.dislikesCount.length}</Typography>
+                </Box>
+        }
+    }
     
     let likeAndDislike = "";
     let publishedAndListens = "";
@@ -352,23 +449,8 @@ function ListCard(props) {
 
         likeAndDislike =
             <Box sx={{ display: "flex" }}>
-                <Box>
-                    <IconButton
-                        aria-label="edit"
-                    >
-                        <ThumbUpOffAltIcon style={{ fontSize: "22pt" }} />
-                    </IconButton>
-                </Box>
-                <Box>
-                    <IconButton
-                        onClick={(event) => {
-                            handleDeleteList(event, idNamePair._id);
-                        }}
-                        aria-label="delete"
-                    >
-                        <ThumbDownOffAltIcon style={{ fontSize: "22pt" }} />
-                    </IconButton>
-                </Box>
+                {likeSection}
+                {dislikeSection}
             </Box>
 
     }

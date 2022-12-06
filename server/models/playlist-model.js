@@ -27,7 +27,7 @@ const playlistSchema = new Schema(
         }], required: true },
         userInteractions: { type: [{
             userName: String,
-            type: Boolean,
+            kind: Boolean,
         }], required: true },
         isPublished: { type: Boolean, required: true },
         publishedAt: { type: String, required: true },

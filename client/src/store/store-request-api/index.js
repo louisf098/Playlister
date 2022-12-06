@@ -39,7 +39,8 @@ export const createPlaylist = (newListName, newSongs, userEmail, newComments, ne
         //     day: 'numeric',
         // }),
         publishedAt: new Date(0),
-        userName: newUserName
+        userName: newUserName,
+        listens: 0,
     })
 }
 export const getPlaylists = () => api.get(`/playlists`)

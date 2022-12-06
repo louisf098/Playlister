@@ -384,6 +384,12 @@ function ListCard(props) {
         }
     }, [store.sortType])
 
+    useEffect(() => {
+        if (store.sortType !== -1) {
+            store.loadIdNamePairs();
+        }
+    }, [store.listensCounter])
+
     let likeSection = "";
     let dislikeSection = "";
     if (playlist !== undefined && playlist.isPublished) {
@@ -450,7 +456,7 @@ function ListCard(props) {
         publishedAndListens =
             <Box sx={{display: 'flex', flexGrow: 1, justifyContent: 'space-between', mr: '10px'}}>
                 <Typography sx={{ color: "#1b5e20" }}>Published: {playlist!==undefined && playlist.isPublished ? playlist.publishedAt : ""}</Typography>
-                <Typography sx={{ color: "red" }}>Listens: </Typography>
+                <Typography sx={{ color: "red" }}>Listens: {playlist!==undefined && playlist.isPublished ? playlist.listens : ""}</Typography>
             </Box>
 
         likeAndDislike =

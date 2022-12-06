@@ -31,8 +31,8 @@ const playlistSchema = new Schema(
         }], required: true },
         isPublished: { type: Boolean, required: true },
         publishedAt: { type: String, required: true },
-        publishedAtObject: { type: Date },
         userName: { type: String, required: true },
+        listens: { type: Number, required: true},
     },
     { timestamps: true },
 )

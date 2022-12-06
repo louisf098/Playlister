@@ -93,7 +93,8 @@ function GlobalStoreContextProvider(props) {
         currentlySearching: "",
         likeCount: -1,
         dislikeCount: -1,
-        sortType: SortTypes.NONE
+        sortType: SortTypes.NONE,
+        listensCounter: -1,
     });
     const history = useHistory();
 
@@ -130,6 +131,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: store.dislikeCount,
                     sortType: store.sortType,
+                    listensCounter: store.listensCounter,
                 });
             }
             // STOP EDITING THE CURRENT LIST
@@ -154,6 +156,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: store.dislikeCount,
                     sortType: store.sortType,
+                    listensCounter: store.listensCounter,
                 });
             }
             // CREATE A NEW LIST
@@ -178,6 +181,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: store.dislikeCount,
                     sortType: store.sortType,
+                    listensCounter: store.listensCounter,
                 });
             }
             // GET ALL THE LISTS SO WE CAN PRESENT THEM
@@ -202,6 +206,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: store.dislikeCount,
                     sortType: store.sortType,
+                    listensCounter: store.listensCounter,
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -226,6 +231,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: store.dislikeCount,
                     sortType: store.sortType,
+                    listensCounter: store.listensCounter,
                 });
             }
             // UPDATE A LIST
@@ -250,6 +256,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: store.dislikeCount,
                     sortType: store.sortType,
+                    listensCounter: store.listensCounter,
                 });
             }
             // START EDITING A LIST NAME
@@ -274,6 +281,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: store.dislikeCount,
                     sortType: store.sortType,
+                    listensCounter: store.listensCounter,
                 });
             }
             //
@@ -298,6 +306,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: store.dislikeCount,
                     sortType: store.sortType,
+                    listensCounter: store.listensCounter,
                 });
             }
             case GlobalStoreActionType.REMOVE_SONG: {
@@ -321,6 +330,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: store.dislikeCount,
                     sortType: store.sortType,
+                    listensCounter: store.listensCounter,
                 });
             }
             case GlobalStoreActionType.HIDE_MODALS: {
@@ -344,6 +354,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: store.dislikeCount,
                     sortType: store.sortType,
+                    listensCounter: store.listensCounter,
                 });
             }
             case GlobalStoreActionType.SET_ALL_PLAYLISTS: {
@@ -367,6 +378,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: store.dislikeCount,
                     sortType: store.sortType,
+                    listensCounter: store.listensCounter,
                 });
             }
             case GlobalStoreActionType.SET_PLAYING_PLAYLIST: {
@@ -390,6 +402,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: store.dislikeCount,
                     sortType: store.sortType,
+                    listensCounter: store.listensCounter+1,
                 });
             }
             case GlobalStoreActionType.SET_PLAYING_SONG: {
@@ -413,6 +426,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: store.dislikeCount,
                     sortType: store.sortType,
+                    listensCounter: store.listensCounter,
                 });
             }
             case GlobalStoreActionType.INCREMENT_PUBLISH_COUNT: {
@@ -436,6 +450,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: store.dislikeCount,
                     sortType: store.sortType,
+                    listensCounter: store.listensCounter,
                 });
             }
             case GlobalStoreActionType.SET_CURRENT_SCREEN: {
@@ -459,6 +474,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: store.dislikeCount,
                     sortType: store.sortType,
+                    listensCounter: store.listensCounter,
                 });
             }
             case GlobalStoreActionType.SET_CURRENTLY_SEARCHING: {
@@ -482,6 +498,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: store.dislikeCount,
                     sortType: store.sortType,
+                    listensCounter: store.listensCounter,
                 });
             }
             case GlobalStoreActionType.CHANGE_LIKE_COUNT: {
@@ -505,6 +522,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: payload,
                     dislikeCount: store.dislikeCount,
                     sortType: store.sortType,
+                    listensCounter: store.listensCounter,
                 })
             }
             case GlobalStoreActionType.CHANGE_DISLIKE_COUNT: {
@@ -528,6 +546,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: payload,
                     sortType: store.sortType,
+                    listensCounter: store.listensCounter,
                 })
             }
             case GlobalStoreActionType.SET_SORT_TYPE: {
@@ -551,6 +570,7 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: store.dislikeCount,
                     sortType: payload,
+                    listensCounter: store.listensCounter,
                 })
             }
             default:
@@ -957,10 +977,14 @@ function GlobalStoreContextProvider(props) {
             let response = await api.getPlaylistById(id);
             if (response.data.success) {
                 let playlist = response.data.playlist;
-                storeReducer({
-                    type: GlobalStoreActionType.SET_PLAYING_PLAYLIST,
-                    payload: playlist,
-                });
+                playlist.listens = playlist.listens + 1;
+                let res = await api.updatePlaylistById(id, playlist);
+                if (res.data.success) {
+                    storeReducer({
+                        type: GlobalStoreActionType.SET_PLAYING_PLAYLIST,
+                        payload: playlist
+                    });
+                }
             }
             else {
                 console.log("FAILLL")

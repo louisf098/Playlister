@@ -150,11 +150,11 @@ getPlaylists = async (req, res) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-        if (!playlists.length) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Playlists not found` })
-        }
+        // if (!playlists.length) {
+        //     return res
+        //         .status(404)
+        //         .json({ success: false, error: `Playlists not found` })
+        // }
         return res.status(200).json({ success: true, data: playlists })
     }).catch(err => console.log(err))
 }
@@ -198,6 +198,7 @@ updatePlaylist = async (req, res) => {
                     list.isPublished = body.playlist.isPublished;
                     list.publishedAt = body.playlist.publishedAt;
                     list.userName = body.playlist.userName;
+                    list.listens = body.playlist.listens;
                     list
                         .save()
                         .then(() => {

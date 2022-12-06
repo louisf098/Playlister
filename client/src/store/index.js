@@ -689,9 +689,19 @@ function GlobalStoreContextProvider(props) {
                     switch (store.sortType) {
                         case "NONE": {
                             //nothing
+                            break;
                         }
                         case "NAME": {
                             pairsArray = pairsArray.sort((a, b) => a.name.localeCompare(b.name));
+                            break;
+                        }
+                        case "CREATION_DATE": {
+                            //original selection of pairs
+                            break;
+                        }
+                        case "LAST_EDIT_DATE": {
+                            //updated later
+                            break;
                         }
                     }
                     let res = await api.getPlaylists();
@@ -707,9 +717,31 @@ function GlobalStoreContextProvider(props) {
                         switch (store.sortType) {
                             case "NONE": {
                                 //nothing
+                                break;
                             }
                             case "NAME": {
-                                playlists = playlists.sort((a, b) => a.name.localeCompare(b.name));
+                                // playlists = playlists.sort((a, b) => a.name.localeCompare(b.name));
+                                break;
+                            }
+                            case "CREATION_DATE": {
+                                break;
+                            }
+                            case "LAST_EDIT_DATE": {
+                                let userPlaylists = playlists.filter(function(playlist) {
+                                    return playlist.userName === auth.user.userName
+                                })
+                                userPlaylists = userPlaylists.sort(function(a,b){
+                                    return new Date(b.updatedAt) - new Date(a.updatedAt);
+                                });
+                                pairsArray = [];
+                                for (let key in userPlaylists) {
+                                    let list = userPlaylists[key];
+                                    let pair = {
+                                        _id: list._id,
+                                        name: list.name
+                                    };
+                                    pairsArray.push(pair);
+                                }
                             }
                         }
                         console.log(playlists);

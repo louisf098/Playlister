@@ -72,6 +72,16 @@ export default function AppBanner() {
         handleMenuClose();
     }
 
+    const handleSortByCreationDate = () => {
+        store.setSortType("CREATION_DATE");
+        handleMenuClose();
+    }
+
+    const handleSortByLastEditDate = () => {
+        store.setSortType("LAST_EDIT_DATE");
+        handleMenuClose();
+    }
+
     const handleSetScreenAllLists = () => {
         store.setCurrentScreen("ALL_LISTS");
     }
@@ -88,8 +98,8 @@ export default function AppBanner() {
     if (store.currentScreen === "NONE" || store.currentScreen === "HOME") {
         menuItems =
         <Box>
-            <MenuItem onClick={handleMenuClose}>Creation Date (Old - New)</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Last Edit Date (New - Old)</MenuItem>
+            <MenuItem onClick={handleSortByCreationDate}>Creation Date (Old - New)</MenuItem>
+            <MenuItem onClick={handleSortByLastEditDate}>Last Edit Date (New - Old)</MenuItem>
             <MenuItem onClick={handleSortByName}>Name (A-Z)</MenuItem>
         </Box>
     }

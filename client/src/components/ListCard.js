@@ -169,6 +169,11 @@ function ListCard(props) {
         store.dislikePlaylist(id);
     }
 
+    function handleDuplicate(event, id) {
+        event.stopPropagation();
+        store.duplicatePlaylist(id);
+    }
+
     let selectClass = "unselected-list-card";
     if (selected) {
         selectClass = "selected-list-card";
@@ -290,7 +295,9 @@ function ListCard(props) {
                 <Box>
                     {publishButton}
                     {deleteButton}
-                    <Button variant="contained" sx={workspaceButtonStyles}>
+                    <Button onClick={(event) => {
+                        handleDuplicate(event, idNamePair._id);
+                    }} variant="contained" sx={workspaceButtonStyles}>
                         Duplicate
                     </Button>
                 </Box>

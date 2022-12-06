@@ -1299,6 +1299,50 @@ function GlobalStoreContextProvider(props) {
         });
     }
 
+    store.duplicatePlaylist = function (id) {
+        async function duplicate(id) {
+            const res = await api.getPlaylistById(id);
+            if (res.data.success) {
+                let playlist = res.data.playlist;
+                let newListName = playlist.name;
+                const res2 = await api.getPlaylists();
+                if (res2.data.success) {
+                    let playlists = res2.data.data;
+                    playlists = playlists.filter(function (play) {
+                        return play.userName === auth.user.userName
+                    })
+                    while (playlists.some(p => p.name === newListName)) {
+                        newListName += "*"
+                    }
+                    const response = await api.createPlaylist(
+                        newListName,
+                        playlist.songs,
+                        auth.user.email,
+                        [],
+                        [],
+                        [],
+                        [],
+                        false,
+                        auth.user.userName
+                    );
+                    if (response.status === 201) {
+                        tps.clearAllTransactions();
+                        let newList = response.data.playlist;
+                        storeReducer({
+                            type: GlobalStoreActionType.CREATE_NEW_LIST,
+                            payload: newList,
+                        });
+                        // IF IT'S A VALID LIST THEN LET'S START EDITING IT
+                        // history.push("/playlist/" + newList._id);
+                    } else {
+                        console.log("API FAILED TO CREATE A NEW LIST");
+                    }
+                }
+            }
+        }
+        duplicate(id);
+    }
+
 
     return (
         <GlobalStoreContext.Provider

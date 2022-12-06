@@ -989,7 +989,9 @@ function GlobalStoreContextProvider(props) {
             let response = await api.getPlaylistById(id);
             if (response.data.success) {
                 let playlist = response.data.playlist;
-                playlist.listens = playlist.listens + 1;
+                if (playlist.isPublished) {
+                    playlist.listens = playlist.listens + 1;
+                }
                 let res = await api.updatePlaylistById(id, playlist);
                 if (res.data.success) {
                     storeReducer({

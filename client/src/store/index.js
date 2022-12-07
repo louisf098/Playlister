@@ -974,7 +974,9 @@ function GlobalStoreContextProvider(props) {
     store.deleteList = function (id) {
         async function processDelete(id) {
             let response = await api.deletePlaylistById(id);
-            if (response.data.success) {
+            console.log(response);
+            if (response.status === 200) {
+                console.log("Hi")
                 store.loadIdNamePairs();
             }
         }

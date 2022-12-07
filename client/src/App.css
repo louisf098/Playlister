@@ -178,7 +178,7 @@ body {
 }
 
 .selected-song {
-  border: 2px solid darkblue;
+  border: 3px solid orangered;
   display: flex;
   justify-content: space-between;
 }

@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import MUIDeleteModal from './MUIDeleteModal'
 import MUIEditSongModal from './MUIEditSongModal'
 import MUIRemoveSongModal from './MUIRemoveSongModal'
+import MUIRenameListModal from './MUIRenameListModal';
 import SplashScreen from './SplashScreen'
 import AuthContext from '../auth'
 import { GlobalStoreContext } from "../store";
@@ -36,6 +37,7 @@ export default function HomeWrapper() {
                 <MUIDeleteModal />
                 <MUIRemoveSongModal />
                 <MUIEditSongModal />
+                <MUIRenameListModal />
             </Box>
         )
     else

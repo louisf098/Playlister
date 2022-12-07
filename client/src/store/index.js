@@ -40,7 +40,8 @@ export const GlobalStoreActionType = {
     CHANGE_LIKE_COUNT: "CHANGE_LIKE_COUNT",
     CHANGE_DISLIKE_COUNT: "CHANGE_DISLIKE_COUNT",
     SET_SORT_TYPE: "SET_SORT_TYPE",
-    INCREMENT_SONG_INDEX: "INCREMENT_SONG_INDEX"
+    INCREMENT_SONG_INDEX: "INCREMENT_SONG_INDEX",
+    SET_CURRENT_MODAL: "SET_CURRENT_MODAL"
 };
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -51,6 +52,7 @@ const CurrentModal = {
     DELETE_LIST: "DELETE_LIST",
     EDIT_SONG: "EDIT_SONG",
     REMOVE_SONG: "REMOVE_SONG",
+    RENAME_LIST: "RENAME_LIST"
 };
 
 const CurrentScreen = {
@@ -598,6 +600,30 @@ function GlobalStoreContextProvider(props) {
                     listensCounter: store.listensCounter,
                 })
             }
+            case GlobalStoreActionType.SET_CURRENT_MODAL: {
+                return setStore({
+                    currentModal: payload,
+                    idNamePairs: store.idNamePairs,
+                    currentList: store.currentList,
+                    currentSongIndex: -1,
+                    currentSong: null,
+                    newListCounter: store.newListCounter,
+                    listNameActive: false,
+                    listIdMarkedForDeletion: null,
+                    listMarkedForDeletion: null,
+                    allPlaylists: store.allPlaylists,
+                    playingPlaylist: store.playingPlaylist,
+                    playingSong: store.playingSong,
+                    playingSongIndex: store.playingSongIndex,
+                    publishCounter: store.publishCounter,
+                    currentScreen: store.currentScreen,
+                    currentlySearching: store.currentlySearching,
+                    likeCount: store.likeCount,
+                    dislikeCount: store.dislikeCount,
+                    sortType: store.sortType,
+                    listensCounter: store.listensCounter,
+                })
+            }
             default:
                 return store;
         }
@@ -639,9 +665,12 @@ function GlobalStoreContextProvider(props) {
                     playlists = playlists.filter(function (play) {
                         return play.userName === auth.user.userName
                     })
-                    while (playlists.some(p => p.name === playlist.name)) {
-                        playlist.name += "*";
-                    }
+                    // while (playlists.some(p => p.name === playlist.name)) {
+                    //     storeReducer({
+                    //         type: GlobalStoreActionType.SET_CURRENT_MODAL,
+                    //         payload: "RENAME_LIST"
+                    //     });
+                    // }
                 }
                 async function updateList(playlist) {
                     response = await api.updatePlaylistById(
@@ -1375,6 +1404,12 @@ function GlobalStoreContextProvider(props) {
         });
     }
 
+    store.setCurrentModal = function (text) {
+        storeReducer({
+            type: GlobalStoreActionType.SET_CURRENT_MODAL,
+            payload: text,
+        });
+    }
 
     return (
         <GlobalStoreContext.Provider

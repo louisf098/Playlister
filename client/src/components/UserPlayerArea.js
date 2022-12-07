@@ -121,49 +121,7 @@ function UserPlayerArea() {
                 <YouTubePlayerExample />
             </Box>
             <TabPanel value={value} index={0}>
-                <Box
-                    sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        height: "25vh",
-                        bgcolor: '#D3D3D3',
-                        fontFamily: "'Merriweather', serif",
-                        flexGrow: 1,
-                    }}
-                >
-                    <Box sx={{ display: "flex", ml: "auto", mr: "auto" }}>
-                        <Typography>Now Playing</Typography>
-                    </Box>
-                    <Box sx={{ display: "flex", flexDirection: "column" }}>
-                        <Typography>Playlist: {playlistName}</Typography>
-                        <Typography>Song #: {songNum}</Typography>
-                        <Typography>Title: {songTitle}</Typography>
-                        <Typography>Artist: {songArtist}</Typography>
-                    </Box>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            ml: "auto",
-                            mr: "auto",
-                            bgcolor: "#123456",
-                            borderRadius: "25px",
-                            padding: '0px 2px 0px 2px',
-                        }}
-                    >
-                        <IconButton>
-                            <SkipPreviousIcon sx={{fontSize: '25pt', color: 'white'}}/>
-                        </IconButton>
-                        <IconButton>
-                            <StopIcon sx={{fontSize: '25pt', color: 'white'}}/>
-                        </IconButton>
-                        <IconButton>
-                            <PlayArrowIcon sx={{fontSize: '25pt', color: 'white'}}/>
-                        </IconButton>
-                        <IconButton>
-                            <SkipNextIcon sx={{fontSize: '25pt', color: 'white'}}/>
-                        </IconButton>
-                    </Box>
-                </Box>
+
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <Box sx={{display: 'flex', flexDirection: 'column', fontFamily: "'Merriweather', serif", bgcolor: '#D3D3D3', maxHeight: '66vh', height: '66vh'}}>

@@ -39,7 +39,8 @@ export const GlobalStoreActionType = {
     SET_CURRENTLY_SEARCHING: "SET_CURRENTLY_SEARCHING",
     CHANGE_LIKE_COUNT: "CHANGE_LIKE_COUNT",
     CHANGE_DISLIKE_COUNT: "CHANGE_DISLIKE_COUNT",
-    SET_SORT_TYPE: "SET_SORT_TYPE"
+    SET_SORT_TYPE: "SET_SORT_TYPE",
+    INCREMENT_SONG_INDEX: "INCREMENT_SONG_INDEX"
 };
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -393,9 +394,9 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     allPlaylists: store.allPlaylists,
-                    playingPlaylist: payload,
+                    playingPlaylist: payload.playlist,
                     playingSong: store.playingSong,
-                    playingSongIndex: store.playingSongIndex,
+                    playingSongIndex: payload.index,
                     publishCounter: store.publishCounter,
                     currentScreen: store.currentScreen,
                     currentlySearching: store.currentlySearching,
@@ -570,6 +571,30 @@ function GlobalStoreContextProvider(props) {
                     likeCount: store.likeCount,
                     dislikeCount: store.dislikeCount,
                     sortType: payload,
+                    listensCounter: store.listensCounter,
+                })
+            }
+            case GlobalStoreActionType.INCREMENT_SONG_INDEX: {
+                return setStore({
+                    currentModal: CurrentModal.NONE,
+                    idNamePairs: store.idNamePairs,
+                    currentList: store.currentList,
+                    currentSongIndex: -1,
+                    currentSong: null,
+                    newListCounter: store.newListCounter,
+                    listNameActive: false,
+                    listIdMarkedForDeletion: null,
+                    listMarkedForDeletion: null,
+                    allPlaylists: store.allPlaylists,
+                    playingPlaylist: store.playingPlaylist,
+                    playingSong: store.playingSong,
+                    playingSongIndex: payload,
+                    publishCounter: store.publishCounter,
+                    currentScreen: store.currentScreen,
+                    currentlySearching: store.currentlySearching,
+                    likeCount: store.likeCount,
+                    dislikeCount: store.dislikeCount,
+                    sortType: store.sortType,
                     listensCounter: store.listensCounter,
                 })
             }
@@ -996,7 +1021,7 @@ function GlobalStoreContextProvider(props) {
                 if (res.data.success) {
                     storeReducer({
                         type: GlobalStoreActionType.SET_PLAYING_PLAYLIST,
-                        payload: playlist
+                        payload: { playlist: playlist, index: 0 }
                     });
                 }
             }
@@ -1175,7 +1200,7 @@ function GlobalStoreContextProvider(props) {
     store.resetPlayingList = function () {
         storeReducer({
             type: GlobalStoreActionType.SET_PLAYING_PLAYLIST,
-            payload: null,
+            payload: {playlist: null, index:0},
         });
     };
 
@@ -1341,6 +1366,13 @@ function GlobalStoreContextProvider(props) {
             }
         }
         duplicate(id);
+    }
+
+    store.incrementSongIndex = function (index) {
+        storeReducer({
+            type: GlobalStoreActionType.INCREMENT_SONG_INDEX,
+            payload: index,
+        });
     }
 
 

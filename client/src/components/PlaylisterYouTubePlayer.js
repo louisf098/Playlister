@@ -129,7 +129,7 @@ export default function YouTubePlayerExample() {
     let playingSong = "";
     if (store.playingPlaylist !== null && store.playingPlaylist.songs.length > 0) {
         playingSong = store.playingPlaylist.songs[store.playingSongIndex];
-        songNum = store.playingSongIndex;
+        songNum = store.playingSongIndex + 1;
         songTitle = playingSong.title;
         songArtist = playingSong.artist;
     }

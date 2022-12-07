@@ -52,10 +52,17 @@ function SongCard(props) {
         event.stopPropagation();
         store.showRemoveSongModal(index, song);
     }
+
+    let selectedStyles = false;
+    
     function handleClick(event) {
         // DOUBLE CLICK IS FOR SONG EDITING
         event.stopPropagation();
-        if (event.detail === 2 && !isPublished) {
+        if (event.detail === 1) {
+            store.incrementSongIndex(index);
+            selectedStyles = true;
+        }
+        else if (event.detail === 2 && !isPublished) {
             store.showEditSongModal(index, song);
         }
     }
@@ -75,10 +82,15 @@ function SongCard(props) {
     }
 
     let cardClass = "list-card unselected-list-card";
+    // if (selectedStyles) cardClass += " selected-song"
+    // else {
+    //     cardClass += " not-selected-song"
+    // }
+    cardClass += store.playingSongIndex === index ? ' selected-song' : ' not-selected-song'
+    
     return (
         <div
             key={index}
-            id={'song-' + index + '-card'}
             className={cardClass}
             onDragStart={handleDragStart}
             onDragOver={handleDragOver}
@@ -89,7 +101,6 @@ function SongCard(props) {
             onClick={(event) => {
                 handleClick(event);
             }}
-            style={{display: "flex", justifyContent: 'space-between'}}
         >   <Box>
                 {index + 1}.
 

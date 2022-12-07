@@ -177,6 +177,17 @@ body {
   max-height: 80vh;
 }
 
+.selected-song {
+  border: 2px solid darkblue;
+  display: flex;
+  justify-content: space-between;
+}
+
+.not-selected-song {
+  display: flex;
+  justify-content: space-between;
+}
+
 .list-card,
 .selected-list-card,
 .unselected-list-card {

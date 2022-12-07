@@ -659,19 +659,6 @@ function GlobalStoreContextProvider(props) {
             if (response.data.success) {
                 let playlist = response.data.playlist;
                 playlist.name = newName;
-                const res = await api.getPlaylists();
-                if (res.data.success) {
-                    let playlists = res.data.data;
-                    playlists = playlists.filter(function (play) {
-                        return play.userName === auth.user.userName
-                    })
-                    // while (playlists.some(p => p.name === playlist.name)) {
-                    //     storeReducer({
-                    //         type: GlobalStoreActionType.SET_CURRENT_MODAL,
-                    //         payload: "RENAME_LIST"
-                    //     });
-                    // }
-                }
                 async function updateList(playlist) {
                     response = await api.updatePlaylistById(
                         playlist._id,
@@ -686,7 +673,7 @@ function GlobalStoreContextProvider(props) {
                                     type: GlobalStoreActionType.CHANGE_LIST_NAME,
                                     payload: {
                                         idNamePairs: pairsArray,
-                                        playlist: store.currentList,
+                                        playlist: null,
                                     },
                                 });
                             }

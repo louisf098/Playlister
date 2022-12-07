@@ -306,7 +306,7 @@ function ListCard(props) {
         duplicateButton = <Box></Box>
     }
 
-    if (expanded) {
+    if (expanded && store.currentList !== null) {
         workspaceButtons = (
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 {undoRedoButtons}

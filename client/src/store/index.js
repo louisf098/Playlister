@@ -1234,7 +1234,7 @@ function GlobalStoreContextProvider(props) {
             if (response.data.success) {
                 storeReducer({
                     type: GlobalStoreActionType.SET_PLAYING_PLAYLIST,
-                    payload: playlist,
+                    payload: {playlist: playlist, index: store.playingSongIndex}
                 });
             }
         }

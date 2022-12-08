@@ -61,8 +61,10 @@ function SongCard(props) {
         if (event.detail === 1) {
             console.log(store.playingPlaylist);
             console.log(store.currentList);
-            if (store.playingPlaylist._id === store.currentList._id) {
-                store.incrementSongIndex(index);
+            if (store.playingPlaylist !== null) {
+                if (store.playingPlaylist._id === store.currentList._id) {
+                    store.incrementSongIndex(index);
+                }
             }
         }
         else if (event.detail === 2 && !isPublished) {
@@ -89,7 +91,11 @@ function SongCard(props) {
     // else {
     //     cardClass += " not-selected-song"
     // }
-    cardClass += store.playingSongIndex === index && store.playingPlaylist._id === store.currentList._id ? ' selected-song' : ' not-selected-song'
+    if (store.playingPlaylist !== null) {
+        cardClass += store.playingSongIndex === index && store.playingPlaylist._id === store.currentList._id ? ' selected-song' : ' not-selected-song'
+    } else {
+        cardClass += ' not-selected-song'
+    }
     
     return (
         <div

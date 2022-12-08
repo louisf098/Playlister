@@ -328,7 +328,7 @@ function ListCard(props) {
         idNamePair._id === store.currentList._id
     ) {
         songBox = (
-            <Box sx={{ maxWidth: "32vw", width: "100%" }}>
+            <Box sx={{ maxWidth: "32vw", width: "100%", maxHeight: '60vh', height: '100%', overflow: 'auto' }}>
                 <List sx={{ alignItems: "center" }}>
                     {store.currentList.songs.map((song, index) => (
                         <ListItem sx={{ maxWidth: "32vw", width: "100%" }}>

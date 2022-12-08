@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
 
 import Box from '@mui/material/Box';
@@ -59,8 +59,11 @@ function SongCard(props) {
         // DOUBLE CLICK IS FOR SONG EDITING
         event.stopPropagation();
         if (event.detail === 1) {
-            store.incrementSongIndex(index);
-            selectedStyles = true;
+            console.log(store.playingPlaylist);
+            console.log(store.currentList);
+            if (store.playingPlaylist._id === store.currentList._id) {
+                store.incrementSongIndex(index);
+            }
         }
         else if (event.detail === 2 && !isPublished) {
             store.showEditSongModal(index, song);
@@ -86,7 +89,7 @@ function SongCard(props) {
     // else {
     //     cardClass += " not-selected-song"
     // }
-    cardClass += store.playingSongIndex === index ? ' selected-song' : ' not-selected-song'
+    cardClass += store.playingSongIndex === index && store.playingPlaylist._id === store.currentList._id ? ' selected-song' : ' not-selected-song'
     
     return (
         <div
